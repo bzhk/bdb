@@ -11128,3 +11128,37 @@ a.text-dark:focus {
   }
 }
 
+.sidebar__container {
+  padding-top: 200px;
+  height: 100%;
+  width: 20%;
+  max-width: 300px;
+  background: #c2c2c2;
+}
+
+.sidebar__item {
+  width: 100%;
+  padding: 20px 10px;
+  color: #fff;
+  font-weight: bolder;
+  transition: 0.8s;
+  border-bottom: 1px solid #dfdfdf;
+  text-align: center;
+}
+
+.sidebar__item:hover {
+  background: #dfdfdf;
+}
+
+.sidebar__item--active {
+  background: #dfdfdf;
+}
+
+.app__container {
+  width: 100%;
+  min-height: 100vh;
+  background: #c2c2c2;
+  display: -webkit-flex;
+  display: flex;
+}
+

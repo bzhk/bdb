@@ -1,25 +1,65 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import { Router } from "react-router";
+import history from "../History";
 import AppContext from "../AppContext";
-
+import Sidebar from "./Sidebar/Sidebar";
+import Users from "./Users/Users";
+import Instruments from "./Instruments/Instruments";
 class App extends Component {
-    testFunc = () => {
-        console.log('test');
-    }
-    render() {
-        this.testFunc();
-        return (
-            <AppContext.Provider>
-            <div className="container">
-                <div className="row justify-content-center">
-                    <div className="col-md-8">
-                        <div className="card">
-                            <div className="card-header">Example Component</div>
+    constructor() {
+        super();
 
-                            <div className="card-body">I'm an example component!</div>
+        this.state = {
+        
+        }
+
+        this.routes = [
+            {
+                path: "/users",
+                name: "Users",
+                Compontent: Users
+            },
+            {
+                path: "/instruments",
+                name: "Instruments",
+                Compontent: Instruments
+            }
+        ];
+    }
+
+    componentDidMount = async () => {};
+
+    nextPath = path => {
+        history.push(path);
+    };
+
+    
+
+    getToken = () => {
+        return new Promise(resolve => {
+            if (document.querySelector("meta[name=csrf-token]")) {
+                return resolve(
+                    document.querySelector("meta[name=csrf-token]").content
+                );
+            } else {
+                return resolve("");
+            }
+        });
+    };
+
+    render() {
+        return (
+            <AppContext.Provider
+                value={{ routes: this.routes, nextPath: this.nextPath }}
+            >
+                <Router history={history}>
+                    <div className="app__container">
+                        
+                            <Sidebar />
+                            {/* <Body /> */}
                         </div>
-                    </div>
-                </div>
-            </div>
+                    
+                </Router>
             </AppContext.Provider>
         );
     }
