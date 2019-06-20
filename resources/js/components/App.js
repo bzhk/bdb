@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import AppContext from "../AppContext";
 
-export default class Example extends Component {
+class App extends Component {
+    testFunc = () => {
+        console.log('test');
+    }
     render() {
+        this.testFunc();
         return (
+            <AppContext.Provider>
             <div className="container">
                 <div className="row justify-content-center">
                     <div className="col-md-8">
@@ -15,10 +20,9 @@ export default class Example extends Component {
                     </div>
                 </div>
             </div>
+            </AppContext.Provider>
         );
     }
 }
 
-if (document.getElementById('example')) {
-    ReactDOM.render(<Example />, document.getElementById('example'));
-}
+export default App;
