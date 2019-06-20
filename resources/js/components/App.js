@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 import { Router } from "react-router";
+import "@babel/polyfill";
+
 import history from "../History";
 import AppContext from "../AppContext";
 import Sidebar from "./Sidebar/Sidebar";
 import Body from "./Body/Body";
 import Users from "./Users/Users";
 import Instruments from "./Instruments/Instruments";
+
 class App extends Component {
     constructor() {
         super();

@@ -39,6 +39,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "@babel/polyfill": "^7.4.4",
         "react-router-dom": "^5.0.1"
     }
 }
