@@ -3,6 +3,7 @@ import { Router } from "react-router";
 import history from "../History";
 import AppContext from "../AppContext";
 import Sidebar from "./Sidebar/Sidebar";
+import Body from "./Body/Body";
 import Users from "./Users/Users";
 import Instruments from "./Instruments/Instruments";
 class App extends Component {
@@ -17,12 +18,12 @@ class App extends Component {
             {
                 path: "/users",
                 name: "Users",
-                Compontent: Users
+                Component: Users
             },
             {
                 path: "/instruments",
                 name: "Instruments",
-                Compontent: Instruments
+                Component: Instruments
             }
         ];
     }
@@ -56,7 +57,7 @@ class App extends Component {
                     <div className="app__container">
                         
                             <Sidebar />
-                            {/* <Body /> */}
+                            <Body />
                         </div>
                     
                 </Router>
