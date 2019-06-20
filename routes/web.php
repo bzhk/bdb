@@ -15,6 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::post('/user','UserController@create');
+
 Route::get('{slug}', function () {
     return view('welcome');
 })->where('slug', '(?!api)([A-z\d-\/_.]+)?');

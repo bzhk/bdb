@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Router } from "react-router";
 import "@babel/polyfill";
-
+import axios from "axios";
 import history from "../History";
 import AppContext from "../AppContext";
 import Sidebar from "./Sidebar/Sidebar";
@@ -13,9 +13,7 @@ class App extends Component {
     constructor() {
         super();
 
-        this.state = {
-        
-        }
+        this.state = {};
 
         this.routes = [
             {
@@ -37,8 +35,6 @@ class App extends Component {
         history.push(path);
     };
 
-    
-
     getToken = () => {
         return new Promise(resolve => {
             if (document.querySelector("meta[name=csrf-token]")) {
@@ -51,18 +47,51 @@ class App extends Component {
         });
     };
 
+    addNewUser = (name, surname) => {
+        console.log(name, surname);
+        this.postRequest('/user',{name, surname},(res)=>console.log(res.data))
+    };
+
+    postRequest = async (
+        path,
+        data,
+        successCb = () => {},
+        errorCb = () => {},
+        finallyCb = () => {}
+    ) => {
+        const token = await this.getToken();
+        console.log(token);
+        if(!token)
+        {
+            console.log('empty token')
+            return;
+        }
+
+        axios
+            .post(path, data, {
+                headers: {
+                    "X-CSRF-TOKEN": token
+                }
+            })
+            .then(successCb)
+            .catch(errorCb)
+            .finally(finallyCb);
+    };
+
     render() {
         return (
             <AppContext.Provider
-                value={{ routes: this.routes, nextPath: this.nextPath }}
+                value={{
+                    routes: this.routes,
+                    nextPath: this.nextPath,
+                    addNewUser: this.addNewUser
+                }}
             >
                 <Router history={history}>
                     <div className="app__container">
-                        
-                            <Sidebar />
-                            <Body />
-                        </div>
-                    
+                        <Sidebar />
+                        <Body />
+                    </div>
                 </Router>
             </AppContext.Provider>
         );

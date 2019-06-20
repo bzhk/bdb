@@ -11169,3 +11169,16 @@ a.text-dark:focus {
   background: #fff;
 }
 
+.content__container {
+  width: 100%;
+  padding: 20px;
+}
+
+.content__header {
+  width: 100%;
+  padding: 20px;
+  font-size: 24px;
+  font-weight: bolder;
+  border: 1px solid #dfdfdf;
+}
+
