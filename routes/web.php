@@ -15,7 +15,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+Route::get('/users','UserController@store');
 Route::post('/user','UserController@create');
+
+
+Route::get('/list/filter','UsersInstrumentsController@getUsers');
 
 Route::get('{slug}', function () {
     return view('welcome');
