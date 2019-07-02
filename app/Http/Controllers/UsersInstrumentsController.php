@@ -7,7 +7,7 @@ use App\UsersInstrumentModel;
 
 class UsersInstrumentsController extends Controller
 {
-    public function store(Request $req)
+    public function get(Request $req)
     {   
         try{
             $name = $req->query('name') === NULL ? "%" : '%'.$req->query('name').'%';

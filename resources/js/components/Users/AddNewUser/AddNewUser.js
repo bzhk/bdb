@@ -6,6 +6,20 @@ const AddNewUser = props => {
     const [name, setName] = useState("");
     const [surname, setSurname] = useState("");
     const context = useContext(AppContext);
+
+    const addNewUser = (name, surname) => {
+        context
+            .postRequest("/user", { name, surname })
+            .then(resp => {
+                try {
+                    context.setSuccessMsg(resp.data.value);
+                } catch (err) {
+                    context.setSuccessMsg("Done.");
+                }
+            })
+            .catch(err => context.setErrorMsg(err));
+    };
+
     return (
         <div className="widget__container">
             <InputHook label="Imię" id="name" type="text" onChange={setName} />
@@ -18,7 +32,7 @@ const AddNewUser = props => {
             <button
                 className="btn btn-success"
                 onClick={() => {
-                    context.addNewUser(name, surname);
+                    addNewUser(name, surname);
                 }}
             >
                 Dodaj

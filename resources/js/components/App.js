@@ -13,7 +13,10 @@ class App extends Component {
     constructor() {
         super();
 
-        this.state = {};
+        this.state = {
+            errorMsg: "",
+            successMsg: ""
+        };
 
         this.routes = [
             {
@@ -42,40 +45,61 @@ class App extends Component {
                     document.querySelector("meta[name=csrf-token]").content
                 );
             } else {
-                return resolve("");
+                return reject("Error with local token.");
             }
         });
     };
 
-    addNewUser = (name, surname) => {
-        console.log(name, surname);
-        this.postRequest('/user',{name, surname},(res)=>console.log(res.data))
+    setErrorMsg = async msg => {
+        await this.setState({ errorMsg: msg });
+        setTimeout(() => this.setState({ errorMsg: "" }, 1500));
     };
 
-    postRequest = async (
-        path,
-        data,
-        successCb = () => {},
-        errorCb = () => {},
-        finallyCb = () => {}
-    ) => {
-        const token = await this.getToken();
-        console.log(token);
-        if(!token)
-        {
-            console.log('empty token')
-            return;
-        }
+    setSuccessMsg = async msg => {
+        await this.setState({ successMsg: msg });
+        setTimeout(() => this.setState({ successMsg: "" }, 1500));
+    };
 
-        axios
-            .post(path, data, {
-                headers: {
-                    "X-CSRF-TOKEN": token
+    getRequest = async (path, headers = {}) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const token = await this.getToken();
+                const resp = await axios.get(path, {
+                    ...headers,
+                    headers: {
+                        "X-CSRF-TOKEN": token
+                    }
+                });
+                return resolve(resp);
+            } catch (err) {
+                if (err.response) {
+                    return reject(err.response.data.value);
+                } else {
+                    return reject(err);
                 }
-            })
-            .then(successCb)
-            .catch(errorCb)
-            .finally(finallyCb);
+            }
+        });
+    };
+
+    postRequest = async (path, data, headers = {}) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const token = await this.getToken();
+                const resp = await axios.post(path, data, {
+                    ...headers,
+                    headers: {
+                        "X-CSRF-TOKEN": token
+                    }
+                });
+                return resolve(resp);
+            } catch (err) {
+                if (err.response) {
+                    return reject(err.response.data.value);
+                } else {
+                    return reject(err);
+                }
+            }
+        });
     };
 
     render() {
@@ -84,7 +108,12 @@ class App extends Component {
                 value={{
                     routes: this.routes,
                     nextPath: this.nextPath,
-                    addNewUser: this.addNewUser
+                    postRequest: this.postRequest,
+                    getRequest: this.getRequest,
+                    setErrorMsg: this.setErrorMsg,
+                    errorMsg: this.state.errorMsg,
+                    setSuccessMsg: this.setSuccessMsg,
+                    successMsg: this.state.successMsg
                 }}
             >
                 <Router history={history}>
