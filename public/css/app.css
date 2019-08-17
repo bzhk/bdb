@@ -11166,7 +11166,7 @@ a.text-dark:focus {
   width: 100%;
   height: 100%;
   min-height: 100vh;
-  background: #fff;
+  background: #efefef;
 }
 
 .content__container {
@@ -11180,5 +11180,27 @@ a.text-dark:focus {
   font-size: 24px;
   font-weight: bolder;
   border: 1px solid #dfdfdf;
+}
+
+.widget__container {
+  padding: 10px;
+  margin: 10px;
+}
+
+.user-header__container {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.instruments-item__container {
+  padding: 20px 10px;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  -webkit-align-items: center;
+          align-items: center;
+  margin: 5px 0;
+  background: #fff;
 }
 

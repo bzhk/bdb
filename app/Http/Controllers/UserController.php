@@ -70,4 +70,21 @@ class UserController extends Controller
         }   
     }
 
+    public function getUser(Request $req)
+    {
+        try{
+            $id = $req->id;
+           
+            
+        $users = UserModel::with(['usersInstruments.instruments.name'])
+                ->where('id',$id)
+                ->first();
+            return response(['status'=>'ok', 'value'=>$users],200);
+        }catch(Error $e)
+        {      
+            $msg = $this->parseErrorResponse($e->getMessage());
+            return response(['status'=>'error', 'value'=>$msg],500);
+        }   
+    }
+
 }

@@ -15,9 +15,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::prefix('v1')->group(function () { 
+    Route::get('/users','UserController@get');
+    Route::post('/users/new','UserController@create');
+    Route::get('/users/{id}','UserController@getUser');
+    Route::post('instrument/freeup','UsersInstrumentsController@freeupInstrument');
+});
 
-Route::get('/users_list','UserController@get');
-Route::post('/user','UserController@create');
 
 
 Route::get('/list/filter','UsersInstrumentsController@getUsers');

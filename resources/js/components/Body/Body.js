@@ -8,7 +8,7 @@ const Body = props => {
         <Switch>
             {context.routes.map((elem, index) => {
                
-                const {name, path, Component} = elem;
+                const {name, path, Component, sidebar} = elem;
                 return <Route exact key={name} path={path} component={Component} />                
                        
             })}

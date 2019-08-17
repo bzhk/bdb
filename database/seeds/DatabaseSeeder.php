@@ -14,13 +14,13 @@ class DatabaseSeeder extends Seeder
     {
         // $this->call(UsersTableSeeder::class);
         DB::table('history_type')->insert(
-        ['name' => 'Add','created_at'=> date("Y-m-d H:i:s"),'updated_at'=>date("Y-m-d H:i:s")]);
+        ['id'=>1,'name' => 'Add','created_at'=> date("Y-m-d H:i:s"),'updated_at'=>date("Y-m-d H:i:s")]);
 
         DB::table('history_type')->insert(
-        ['name' => 'Remove','created_at'=> date("Y-m-d H:i:s"),'updated_at'=>date("Y-m-d H:i:s")]);
+        ['id'=>2,'name' => 'Remove','created_at'=> date("Y-m-d H:i:s"),'updated_at'=>date("Y-m-d H:i:s")]);
 
         DB::table('history_type')->insert(
-        ['name' => 'Archive','created_at'=> date("Y-m-d H:i:s"),'updated_at'=>date("Y-m-d H:i:s")]);
+        ['id'=>3,'name' => 'Archive','created_at'=> date("Y-m-d H:i:s"),'updated_at'=>date("Y-m-d H:i:s")]);
 
                 
     }

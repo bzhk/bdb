@@ -11,6 +11,6 @@ class UserModel extends Model
 
     public function usersInstruments()
     {
-        return $this->hasOne('App\UsersInstrumentModel','user_id','id');
+        return $this->hasMany('App\UsersInstrumentModel','user_id','id');
     }
 }

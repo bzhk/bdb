@@ -7,6 +7,8 @@ import AppContext from "../AppContext";
 import Sidebar from "./Sidebar/Sidebar";
 import Body from "./Body/Body";
 import Users from "./Users/Users";
+import User from "./User/User";
+
 import Instruments from "./Instruments/Instruments";
 
 class App extends Component {
@@ -15,19 +17,28 @@ class App extends Component {
 
         this.state = {
             errorMsg: "",
-            successMsg: ""
+            successMsg: "",
+            userData: {}
         };
 
         this.routes = [
             {
                 path: "/users",
                 name: "Users",
-                Component: Users
+                Component: Users,
+                sidebar: true
+            },
+            {
+                path: "/users/:id",
+                name: "User",
+                Component: User,
+                sidebar: false
             },
             {
                 path: "/instruments",
                 name: "Instruments",
-                Component: Instruments
+                Component: Instruments,
+                sidebar: true
             }
         ];
     }
@@ -48,6 +59,24 @@ class App extends Component {
                 return reject("Error with local token.");
             }
         });
+    };
+
+    getUserData = id => {
+        this.getRequest(`/v1/users/${id}`)
+            .then(res => {
+                this.setState({
+                    userData: res.data.value
+                });
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    };
+
+    freeUpInstrument = (userId, instrumentId) => {
+        this.postRequest("/v1/instrument/freeup", { userId, instrumentId })
+            .then(res => console.log(res))
+            .catch(err => console.log(err));
     };
 
     setErrorMsg = async msg => {
@@ -103,6 +132,7 @@ class App extends Component {
     };
 
     render() {
+        const { userData, successMsg, errorMsg } = this.state;
         return (
             <AppContext.Provider
                 value={{
@@ -111,9 +141,12 @@ class App extends Component {
                     postRequest: this.postRequest,
                     getRequest: this.getRequest,
                     setErrorMsg: this.setErrorMsg,
-                    errorMsg: this.state.errorMsg,
+                    errorMsg,
                     setSuccessMsg: this.setSuccessMsg,
-                    successMsg: this.state.successMsg
+                    successMsg,
+                    userData,
+                    getUserData: this.getUserData,
+                    freeUpInstrument: this.freeUpInstrument
                 }}
             >
                 <Router history={history}>

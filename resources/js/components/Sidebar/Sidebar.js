@@ -17,7 +17,7 @@ class Sidebar extends Component{
            
                 <div className="sidebar__container">
                     {this.context.routes.map((elem, index) => {
-                        return (
+                        return elem.sidebar && (
                             <MenuItem
                                 key={elem.path}
                                 name={elem.name}
