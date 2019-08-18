@@ -58257,6 +58257,10 @@ function (_Component) {
       _History__WEBPACK_IMPORTED_MODULE_5__["default"].push(path);
     });
 
+    _defineProperty(_assertThisInitialized(_this), "goBack", function () {
+      _History__WEBPACK_IMPORTED_MODULE_5__["default"].goBack();
+    });
+
     _defineProperty(_assertThisInitialized(_this), "getToken", function () {
       return new Promise(function (resolve) {
         if (document.querySelector("meta[name=csrf-token]")) {
@@ -58327,6 +58331,58 @@ function (_Component) {
         return console.log(res);
       })["catch"](function (err) {
         return console.log(err);
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "getTypes", function () {
+      _this.getRequest("/v1/types").then(function (res) {
+        console.log(res);
+
+        _this.setState({
+          typesList: res.data
+        });
+      })["catch"](function (err) {
+        return console.log(err);
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "newType", function (name) {
+      _this.postRequest("/v1/type/new", {
+        name: name
+      }).then(function (res) {
+        _this.setMsg({
+          text: res.data.value,
+          type: 1,
+          clear: true
+        });
+
+        _this.getTypes();
+      })["catch"](function (err) {
+        _this.setMsg({
+          text: err,
+          type: 2,
+          clear: true
+        });
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "removeType", function (id) {
+      _this.postRequest("/v1/type/remove", {
+        id: id
+      }).then(function (res) {
+        _this.setMsg({
+          text: res.data.value,
+          type: 1,
+          clear: true
+        });
+
+        _this.getTypes();
+      })["catch"](function (err) {
+        _this.setMsg({
+          text: err,
+          type: 2,
+          clear: true
+        });
       });
     });
 
@@ -58543,21 +58599,22 @@ function (_Component) {
       },
       userData: {},
       instruments: [],
-      usersList: []
+      usersList: [],
+      typesList: []
     };
     _this.routes = [{
       path: "/users",
-      name: "Users",
+      name: "Użytkownicy",
       Component: _Users_Users__WEBPACK_IMPORTED_MODULE_9__["default"],
       sidebar: true
     }, {
       path: "/user/:id",
-      name: "User",
+      name: "Użytkownik",
       Component: _User_User__WEBPACK_IMPORTED_MODULE_10__["default"],
       sidebar: false
     }, {
       path: "/instruments",
-      name: "Instruments",
+      name: "Instrumenty",
       Component: _Instruments_Instruments__WEBPACK_IMPORTED_MODULE_11__["default"],
       sidebar: true
     }];
@@ -58571,11 +58628,13 @@ function (_Component) {
           userData = _this$state.userData,
           alertMsg = _this$state.alertMsg,
           instruments = _this$state.instruments,
-          usersList = _this$state.usersList;
+          usersList = _this$state.usersList,
+          typesList = _this$state.typesList;
       return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_AppContext__WEBPACK_IMPORTED_MODULE_6__["default"].Provider, {
         value: {
           routes: this.routes,
           nextPath: this.nextPath,
+          goBack: this.goBack,
           postRequest: this.postRequest,
           getRequest: this.getRequest,
           setMsg: this.setMsg,
@@ -58588,7 +58647,11 @@ function (_Component) {
           addInstrument: this.addInstrument,
           usersList: usersList,
           getUsers: this.getUsers,
-          removeUser: this.removeUser
+          removeUser: this.removeUser,
+          typesList: typesList,
+          newType: this.newType,
+          getTypes: this.getTypes,
+          removeType: this.removeType
         }
       }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router__WEBPACK_IMPORTED_MODULE_2__["Router"], {
         history: _History__WEBPACK_IMPORTED_MODULE_5__["default"]
@@ -58742,13 +58805,227 @@ var InputHook = function InputHook(props) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Types_Types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Types/Types */ "./resources/js/components/Instruments/Types/Types.js");
+/* harmony import */ var _InstrumentsList_InstrumentsList__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./InstrumentsList/InstrumentsList */ "./resources/js/components/Instruments/InstrumentsList/InstrumentsList.js");
+/* harmony import */ var _AppContext__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../AppContext */ "./resources/js/AppContext.js");
+function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
 
 
-var Instruments = function Instruments(props) {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Instruments");
+
+
+
+
+var Instruments = function Instruments(_ref) {
+  _objectDestructuringEmpty(_ref);
+
+  var context = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_AppContext__WEBPACK_IMPORTED_MODULE_3__["default"]);
+  var newType = context.newType,
+      alertMsg = context.alertMsg,
+      getTypes = context.getTypes,
+      typesList = context.typesList,
+      removeType = context.removeType;
+
+  if (!typesList.length) {
+    getTypes();
+    return null;
+  }
+
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "content__container "
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "content__header"
+  }, "Instrumenty"), alertMsg.text && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "alert ".concat(alertMsg.status == 1 ? 'alert-success' : 'alert-danger')
+  }, alertMsg.text), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "content__body instruments__view"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_InstrumentsList_InstrumentsList__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Types_Types__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    newType: newType,
+    typesList: typesList,
+    removeType: removeType
+  })));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Instruments);
+
+/***/ }),
+
+/***/ "./resources/js/components/Instruments/InstrumentsList/InstrumentsList.js":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/Instruments/InstrumentsList/InstrumentsList.js ***!
+  \********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
+
+
+
+var InstrumentsList = function InstrumentsList(_ref) {
+  _objectDestructuringEmpty(_ref);
+
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "InstrumentsList");
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (InstrumentsList);
+
+/***/ }),
+
+/***/ "./resources/js/components/Instruments/Types/NewType/NewType.js":
+/*!**********************************************************************!*\
+  !*** ./resources/js/components/Instruments/Types/NewType/NewType.js ***!
+  \**********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+var NewType = function NewType(_ref) {
+  var createNewType = _ref.createNewType;
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(""),
+      _useState2 = _slicedToArray(_useState, 2),
+      newType = _useState2[0],
+      setNewType = _useState2[1];
+
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    htmlFor: "new-type"
+  }, "Dodaj nowy typ"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "text",
+    className: "form-control",
+    id: "new-type",
+    onChange: function onChange(ev) {
+      setNewType(ev.target.value);
+    },
+    value: newType
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "btn btn-success",
+    onClick: function onClick() {
+      return createNewType(newType);
+    }
+  }, "Utw\xF3rz"));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (NewType);
+
+/***/ }),
+
+/***/ "./resources/js/components/Instruments/Types/Types.js":
+/*!************************************************************!*\
+  !*** ./resources/js/components/Instruments/Types/Types.js ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _NewType_NewType__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NewType/NewType */ "./resources/js/components/Instruments/Types/NewType/NewType.js");
+/* harmony import */ var _TypesList_TypesList__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TypesList/TypesList */ "./resources/js/components/Instruments/Types/TypesList/TypesList.js");
+
+
+
+
+var Types = function Types(_ref) {
+  var newType = _ref.newType,
+      typesList = _ref.typesList,
+      removeType = _ref.removeType;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "type-list__container"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_NewType_NewType__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    createNewType: newType
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TypesList_TypesList__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    typesList: typesList,
+    removeType: removeType
+  }));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Types);
+
+/***/ }),
+
+/***/ "./resources/js/components/Instruments/Types/TypesList/TypeItem/TypeItem.js":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/Instruments/Types/TypesList/TypeItem/TypeItem.js ***!
+  \**********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var TypeItem = function TypeItem(_ref) {
+  var elem = _ref.elem,
+      removeType = _ref.removeType;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "type-item__container"
+  }, elem.name, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "type-item__btns"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "btn btn-primary"
+  }, "Edytuj"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "btn btn-success"
+  }, "Nowy Instrument"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "btn btn-danger",
+    onClick: removeType
+  }, "Usu\u0144 Typ")));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (TypeItem);
+
+/***/ }),
+
+/***/ "./resources/js/components/Instruments/Types/TypesList/TypesList.js":
+/*!**************************************************************************!*\
+  !*** ./resources/js/components/Instruments/Types/TypesList/TypesList.js ***!
+  \**************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _TypeItem_TypeItem__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TypeItem/TypeItem */ "./resources/js/components/Instruments/Types/TypesList/TypeItem/TypeItem.js");
+
+
+
+var TypesList = function TypesList(_ref) {
+  var typesList = _ref.typesList,
+      _removeType = _ref.removeType;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, typesList.map(function (elem) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TypeItem_TypeItem__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      key: elem.id,
+      elem: elem,
+      removeType: function removeType() {
+        return _removeType(elem.id);
+      }
+    });
+  }));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (TypesList);
 
 /***/ }),
 
@@ -58980,7 +59257,8 @@ var User = function User(_ref) {
       freeUpInstrument = context.freeUpInstrument,
       instruments = context.instruments,
       getFreeInstruments = context.getFreeInstruments,
-      _addInstrument = context.addInstrument;
+      _addInstrument = context.addInstrument,
+      goBack = context.goBack;
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(false),
       _useState2 = _slicedToArray(_useState, 2),
@@ -59005,7 +59283,8 @@ var User = function User(_ref) {
       setModal(false);
     }
   }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_UserHeader_UserHeader__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    userData: userData
+    userData: userData,
+    goBack: goBack
   }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_UserBody_UserBody__WEBPACK_IMPORTED_MODULE_3__["default"], {
     openModal:
     /*#__PURE__*/
@@ -59177,13 +59456,17 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var UserHeader = function UserHeader(_ref) {
-  var userData = _ref.userData;
+  var userData = _ref.userData,
+      goBack = _ref.goBack;
   var id = userData.id,
       name = userData.name,
       surname = userData.surname;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "user-header__container"
-  }, id, ": ", name, " ", surname);
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "btn btn-primary",
+    onClick: goBack
+  }, "Wstecz"), id, ": ", name, " ", surname);
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (UserHeader);

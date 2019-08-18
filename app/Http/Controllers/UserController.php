@@ -36,8 +36,7 @@ class UserController extends Controller
         $id = $req->id;
         
         try{
-            UserModel::
-                        where('id',$id)
+            UserModel::where('id',$id)
                         ->delete();
 
     

@@ -11252,3 +11252,39 @@ a.text-dark:focus {
   z-index: 101;
 }
 
+.type-list__container {
+  width: 30%;
+}
+
+.type-item__container {
+  background: #fff;
+  padding: 10px;
+  width: 100%;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  -webkit-align-items: center;
+          align-items: center;
+  margin: 5px 0;
+}
+
+.type-item__btns {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: space-around;
+          justify-content: space-around;
+  -webkit-align-items: center;
+          align-items: center;
+}
+
+.type-item__btns button {
+  margin-right: 5px;
+}
+
+.instruments__view {
+  display: -webkit-flex;
+  display: flex;
+  width: 100%;
+}
+

@@ -21,6 +21,12 @@ Route::prefix('v1')->group(function () {
     Route::post('user/remove','UserController@remove');
     Route::get('user/{id}','UserController@getUser');
 
+
+    Route::get('types','TypesController@get');
+    Route::post('type/new','TypesController@newType');
+    Route::post('type/edit','TypesController@editType');
+    Route::post('type/remove','TypesController@removeType');
+
     Route::get('instruments','InstrumentsController@getInstrumentsList');
     Route::post('instruments/add','InstrumentsController@setNewInstrumentsOwner');
     Route::post('instrument/freeup','InstrumentsController@freeupInstrument');

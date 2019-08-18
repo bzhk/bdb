@@ -11,7 +11,8 @@ const User = ({ match }) => {
         freeUpInstrument,
         instruments,
         getFreeInstruments,
-        addInstrument
+        addInstrument,
+        goBack
     } = context;
 
     const [modal, setModal] = useState(false);
@@ -33,7 +34,7 @@ const User = ({ match }) => {
                     }}
                 />
             )}
-            <UserHeader userData={userData} />
+            <UserHeader userData={userData} goBack={goBack}/>
             <UserBody
                 openModal={async () => {
                     await getFreeInstruments();

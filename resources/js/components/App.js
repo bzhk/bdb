@@ -23,25 +23,26 @@ class App extends Component {
             },
             userData: {},
             instruments: [],
-            usersList: []
+            usersList: [],
+            typesList: []
         };
 
         this.routes = [
             {
                 path: "/users",
-                name: "Users",
+                name: "Użytkownicy",
                 Component: Users,
                 sidebar: true
             },
             {
                 path: "/user/:id",
-                name: "User",
+                name: "Użytkownik",
                 Component: User,
                 sidebar: false
             },
             {
                 path: "/instruments",
-                name: "Instruments",
+                name: "Instrumenty",
                 Component: Instruments,
                 sidebar: true
             }
@@ -52,6 +53,10 @@ class App extends Component {
 
     nextPath = path => {
         history.push(path);
+    };
+
+    goBack = () => {
+        history.goBack();
     };
 
     getToken = () => {
@@ -75,7 +80,6 @@ class App extends Component {
     };
 
     removeUser = id => {
-        
         this.postRequest("/v1/user/remove", { id })
             .then(res => {
                 this.getUsers();
@@ -118,6 +122,38 @@ class App extends Component {
             .catch(err => console.log(err));
     };
 
+    getTypes = () => {
+        this.getRequest("/v1/types")
+            .then(res => {
+                console.log(res);
+                this.setState({ typesList: res.data });
+            })
+            .catch(err => console.log(err));
+    };
+
+    newType = name => {
+        this.postRequest("/v1/type/new", { name })
+            .then(res => {
+                this.setMsg({ text: res.data.value, type: 1, clear: true });
+                this.getTypes();
+            })
+            .catch(err =>
+             {   
+                this.setMsg({ text: err, type: 2, clear: true })}
+            );
+    };
+
+    removeType = id => {
+        this.postRequest("/v1/type/remove", { id })
+        .then(res => {
+            this.setMsg({ text: res.data.value, type: 1, clear: true });
+            this.getTypes();
+        })
+        .catch(err =>
+         {   
+            this.setMsg({ text: err, type: 2, clear: true })}
+        );
+    }
     setMsg = async ({ text, status, clear }) => {
         const msg = {
             text,
@@ -174,12 +210,13 @@ class App extends Component {
     };
 
     render() {
-        const { userData, alertMsg, instruments, usersList } = this.state;
+        const { userData, alertMsg, instruments, usersList, typesList } = this.state;
         return (
             <AppContext.Provider
                 value={{
                     routes: this.routes,
                     nextPath: this.nextPath,
+                    goBack: this.goBack,
                     postRequest: this.postRequest,
                     getRequest: this.getRequest,
                     setMsg: this.setMsg,
@@ -192,7 +229,11 @@ class App extends Component {
                     addInstrument: this.addInstrument,
                     usersList,
                     getUsers: this.getUsers,
-                    removeUser: this.removeUser
+                    removeUser: this.removeUser,
+                    typesList,
+                    newType: this.newType,
+                    getTypes: this.getTypes,
+                    removeType: this.removeType
                 }}
             >
                 <Router history={history}>
