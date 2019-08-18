@@ -1,6 +1,6 @@
 import React from "react";
 
-const UserListItem = ({ user, nextPath }) => {
+const UserListItem = ({ user, nextPath,removeUser }) => {
     return (
         <div className="user__container">
             <div>
@@ -10,7 +10,7 @@ const UserListItem = ({ user, nextPath }) => {
                 <button className="btn btn-primary" onClick={nextPath}>
                     Szczegóły
                 </button>
-                <button className="btn btn-danger">
+                <button className="btn btn-danger" onClick={removeUser}>
                     Usuń
                 </button>
             </div>

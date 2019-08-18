@@ -7,9 +7,7 @@ import UsersList from "./UsersList/UsersList";
 class Users extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-          
-        };
+        this.state = {};
     }
 
     componentDidMount = () => {
@@ -17,7 +15,7 @@ class Users extends Component {
     };
 
     render() {
-        const { nextPath, getUserData,usersList } = this.context;
+        const { nextPath, getUserData, usersList, removeUser } = this.context;
         return (
             <div className="content__container">
                 <div className="content__header">Users</div>
@@ -28,6 +26,7 @@ class Users extends Component {
                         usersList={usersList}
                         nextPath={nextPath}
                         getUserData={getUserData}
+                        removeUser={removeUser}
                     />
                 </div>
             </div>

@@ -74,6 +74,16 @@ class App extends Component {
             .catch(this.setErrorMsg);
     };
 
+    removeUser = id => {
+        
+        this.postRequest("/v1/user/remove", { id })
+            .then(res => {
+                this.getUsers();
+                this.setMsg({ text: res.data.value, status: 1, clear: true });
+            })
+            .catch(this.setErrorMsg);
+    };
+
     getUserData = id => {
         this.getRequest(`/v1/user/${id}`)
             .then(res => {
@@ -108,17 +118,17 @@ class App extends Component {
             .catch(err => console.log(err));
     };
 
-
-
-    setMsg = async ({text, status, clear}) => {
+    setMsg = async ({ text, status, clear }) => {
         const msg = {
             text,
             status
-        }
+        };
         await this.setState({ alertMsg: msg });
-        if(clear) setTimeout(() => this.setMsg({ text: "", status: null, clear: false }), 2000);
-        
-       
+        if (clear)
+            setTimeout(
+                () => this.setMsg({ text: "", status: null, clear: false }),
+                2000
+            );
     };
 
     getRequest = async (path, headers = {}) => {
@@ -164,12 +174,7 @@ class App extends Component {
     };
 
     render() {
-        const {
-            userData,
-            alertMsg,
-            instruments,
-            usersList
-        } = this.state;
+        const { userData, alertMsg, instruments, usersList } = this.state;
         return (
             <AppContext.Provider
                 value={{
@@ -186,7 +191,8 @@ class App extends Component {
                     getFreeInstruments: this.getFreeInstruments,
                     addInstrument: this.addInstrument,
                     usersList,
-                    getUsers: this.getUsers
+                    getUsers: this.getUsers,
+                    removeUser: this.removeUser
                 }}
             >
                 <Router history={history}>

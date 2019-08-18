@@ -32,18 +32,16 @@ class UserController extends Controller
 
     public function remove(Request $req)
     {
-        $name = $req->name;
-        $surname = $req->surname;
+ 
         $id = $req->id;
         
         try{
-            UserModel::where('name',$name)
-                        ->where('surname',$surname)
-                        ->where('id',$id)
+            UserModel::
+                        where('id',$id)
                         ->delete();
 
     
-            return response(['status'=>'ok', 'value'=>'Removed'],200);
+            return response(['status'=>'ok', 'value'=>'Uzytkownik został usunięty.'],200);
         }catch(Error $e)
         {
             

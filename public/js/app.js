@@ -58275,6 +58275,20 @@ function (_Component) {
       })["catch"](_this.setErrorMsg);
     });
 
+    _defineProperty(_assertThisInitialized(_this), "removeUser", function (id) {
+      _this.postRequest("/v1/user/remove", {
+        id: id
+      }).then(function (res) {
+        _this.getUsers();
+
+        _this.setMsg({
+          text: res.data.value,
+          status: 1,
+          clear: true
+        });
+      })["catch"](_this.setErrorMsg);
+    });
+
     _defineProperty(_assertThisInitialized(_this), "getUserData", function (id) {
       _this.getRequest("/v1/user/".concat(id)).then(function (res) {
         _this.setState({
@@ -58573,7 +58587,8 @@ function (_Component) {
           getFreeInstruments: this.getFreeInstruments,
           addInstrument: this.addInstrument,
           usersList: usersList,
-          getUsers: this.getUsers
+          getUsers: this.getUsers,
+          removeUser: this.removeUser
         }
       }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router__WEBPACK_IMPORTED_MODULE_2__["Router"], {
         history: _History__WEBPACK_IMPORTED_MODULE_5__["default"]
@@ -59332,7 +59347,8 @@ function (_Component) {
       var _this$context = this.context,
           nextPath = _this$context.nextPath,
           getUserData = _this$context.getUserData,
-          usersList = _this$context.usersList;
+          usersList = _this$context.usersList,
+          removeUser = _this$context.removeUser;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "content__container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -59342,7 +59358,8 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Helpers_AlertPanel_AlertPanel__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AddNewUser_AddNewUser__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_UsersList_UsersList__WEBPACK_IMPORTED_MODULE_4__["default"], {
         usersList: usersList,
         nextPath: nextPath,
-        getUserData: getUserData
+        getUserData: getUserData,
+        removeUser: removeUser
       })));
     }
   }]);
@@ -59370,14 +59387,16 @@ __webpack_require__.r(__webpack_exports__);
 
 var UserListItem = function UserListItem(_ref) {
   var user = _ref.user,
-      nextPath = _ref.nextPath;
+      nextPath = _ref.nextPath,
+      removeUser = _ref.removeUser;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "user__container"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, user.id, " - ", user.name, " ", user.surname), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     className: "btn btn-primary",
     onClick: nextPath
   }, "Szczeg\xF3\u0142y"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    className: "btn btn-danger"
+    className: "btn btn-danger",
+    onClick: removeUser
   }, "Usu\u0144")));
 };
 
@@ -59403,7 +59422,8 @@ __webpack_require__.r(__webpack_exports__);
 var UsersList = function UsersList(_ref) {
   var usersList = _ref.usersList,
       _nextPath = _ref.nextPath,
-      getUserData = _ref.getUserData;
+      getUserData = _ref.getUserData,
+      _removeUser = _ref.removeUser;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "users-list__container"
   }, usersList.map(function (elem) {
@@ -59414,6 +59434,9 @@ var UsersList = function UsersList(_ref) {
         getUserData(elem.id);
 
         _nextPath("/user/".concat(elem.id));
+      },
+      removeUser: function removeUser() {
+        return _removeUser(elem.id);
       }
     });
   }));

@@ -24,7 +24,7 @@ class CreateInstrumentsTable extends Migration
 
 
             $table->foreign('instruments_name_id')->references('id')->on('instruments_name');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
         });
     }
 
