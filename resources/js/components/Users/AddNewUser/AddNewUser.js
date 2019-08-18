@@ -2,23 +2,29 @@ import React, { useState, useContext } from "react";
 import InputHook from "../../Helpers/InputHook";
 import AppContext from "../../../AppContext";
 
-const AddNewUser = props => {
+const AddNewUser = ({}) => {
     const [name, setName] = useState("");
     const [surname, setSurname] = useState("");
     const context = useContext(AppContext);
 
     const addNewUser = (name, surname) => {
         context
-            .postRequest("/user", { name, surname })
+            .postRequest("/v1/user/new", { name, surname })
             .then(resp => {
-                try {
-                    context.setSuccessMsg(resp.data.value);
-                } catch (err) {
-                    context.setSuccessMsg("Done.");
-                }
+                context.setMsg({
+                    text: resp.data.value,
+                    status: 1,
+                    clear: true
+                });
+                context.getUsers();
             })
-            .catch(err => context.setErrorMsg(err));
+            .catch(err =>
+                context.setMsg({ text: err, status: 2, clear: true })
+            );
     };
+
+    const { alertMsg } = context;
+    console.log(alertMsg);
 
     return (
         <div className="widget__container">
@@ -37,6 +43,15 @@ const AddNewUser = props => {
             >
                 Dodaj
             </button>
+            {alertMsg.text && (
+                <div
+                    className={`alert ${
+                        alertMsg.status == 1 ? "alert-success" : "alert-danger"
+                    }`}
+                >
+                    {alertMsg.text}
+                </div>
+            )}
         </div>
     );
 };

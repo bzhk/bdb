@@ -16,9 +16,9 @@ Route::get('/', function () {
 });
 
 Route::prefix('v1')->group(function () { 
-    Route::get('/users','UserController@get');
-    Route::post('/user/new','UserController@create');
-    Route::get('/user/{id}','UserController@getUser');
+    Route::get('users','UserController@get');
+    Route::post('user/new','UserController@create');
+    Route::get('user/{id}','UserController@getUser');
 
     Route::get('instruments','InstrumentsController@getInstrumentsList');
     Route::post('instruments/add','InstrumentsController@setNewInstrumentsOwner');

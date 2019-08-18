@@ -20,7 +20,6 @@ const User = ({ match }) => {
         return <div>Loading...</div>;
     }
 
-    console.log(instruments);
 
     return (
         <div className="widget__container">

@@ -1,4 +1,16 @@
-
+.users-list__container{
+    width: 100%;
+}
+.user__container{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    padding: 10px;
+    margin: 5px 0;
+    
+}
 .user-header__container{
     font-size: 30px;
     font-weight: bold;

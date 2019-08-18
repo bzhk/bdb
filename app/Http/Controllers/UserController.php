@@ -21,7 +21,7 @@ class UserController extends Controller
     
             $new_user->save();
 
-            return response(['status'=>'ok', 'value'=>'Added'],200);
+            return response(['status'=>'ok', 'value'=>'Utworzono nowego użytkownika.'],200);
         }catch(Error $e)
         {
             
@@ -58,13 +58,14 @@ class UserController extends Controller
             $name = $req->query('name') === NULL ? "%" : '%'.$req->query('name').'%';
             $surname = $req->query('surname') === NULL ? "%" : '%'.$req->query('surname').'%';
             
-        $users = UserModel::with(['usersInstruments.instruments.name'])
+        $users = UserModel::with(['instruments.name'])
                 ->where('name','like',$name)
                 ->where('surname','like',$surname)
                 ->get();
             return response(['status'=>'ok', 'value'=>$users],200);
         }catch(Error $e)
         {      
+            var_dump($e->getMessage());
             $msg = $this->parseErrorResponse($e->getMessage());
             return response(['status'=>'error', 'value'=>$msg],500);
         }   

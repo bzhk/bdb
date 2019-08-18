@@ -58267,6 +58267,14 @@ function (_Component) {
       });
     });
 
+    _defineProperty(_assertThisInitialized(_this), "getUsers", function () {
+      _this.getRequest("/v1/users").then(function (res) {
+        _this.setState({
+          usersList: res.data.value
+        });
+      })["catch"](_this.setErrorMsg);
+    });
+
     _defineProperty(_assertThisInitialized(_this), "getUserData", function (id) {
       _this.getRequest("/v1/user/".concat(id)).then(function (res) {
         _this.setState({
@@ -58278,7 +58286,7 @@ function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "addInstrument", function (userId, catalogId) {
-      _this.postRequest('/v1/instruments/add', {
+      _this.postRequest("/v1/instruments/add", {
         userId: userId,
         catalogId: catalogId
       }).then(function (res) {
@@ -58299,8 +58307,6 @@ function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "freeUpInstrument", function (catalogId) {
-      console.log(catalogId);
-
       _this.postRequest("/v1/instrument/freeup", {
         catalogId: catalogId
       }).then(function (res) {
@@ -58310,29 +58316,37 @@ function (_Component) {
       });
     });
 
-    _defineProperty(_assertThisInitialized(_this), "setErrorMsg",
+    _defineProperty(_assertThisInitialized(_this), "setMsg",
     /*#__PURE__*/
     function () {
-      var _ref2 = _asyncToGenerator(
+      var _ref3 = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(msg) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(_ref2) {
+        var text, status, clear, msg;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.next = 2;
+                text = _ref2.text, status = _ref2.status, clear = _ref2.clear;
+                msg = {
+                  text: text,
+                  status: status
+                };
+                _context2.next = 4;
                 return _this.setState({
-                  errorMsg: msg
+                  alertMsg: msg
                 });
 
-              case 2:
-                setTimeout(function () {
-                  return _this.setState({
-                    errorMsg: ""
-                  }, 1500);
-                });
+              case 4:
+                if (clear) setTimeout(function () {
+                  return _this.setMsg({
+                    text: "",
+                    status: null,
+                    clear: false
+                  });
+                }, 2000);
 
-              case 3:
+              case 5:
               case "end":
                 return _context2.stop();
             }
@@ -58341,41 +58355,6 @@ function (_Component) {
       }));
 
       return function (_x) {
-        return _ref2.apply(this, arguments);
-      };
-    }());
-
-    _defineProperty(_assertThisInitialized(_this), "setSuccessMsg",
-    /*#__PURE__*/
-    function () {
-      var _ref3 = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(msg) {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                _context3.next = 2;
-                return _this.setState({
-                  successMsg: msg
-                });
-
-              case 2:
-                setTimeout(function () {
-                  return _this.setState({
-                    successMsg: ""
-                  }, 1500);
-                });
-
-              case 3:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3);
-      }));
-
-      return function (_x2) {
         return _ref3.apply(this, arguments);
       };
     }());
@@ -58385,32 +58364,32 @@ function (_Component) {
     function () {
       var _ref4 = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(path) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(path) {
         var headers,
-            _args5 = arguments;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+            _args4 = arguments;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context5.prev = _context5.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
-                headers = _args5.length > 1 && _args5[1] !== undefined ? _args5[1] : {};
-                return _context5.abrupt("return", new Promise(
+                headers = _args4.length > 1 && _args4[1] !== undefined ? _args4[1] : {};
+                return _context4.abrupt("return", new Promise(
                 /*#__PURE__*/
                 function () {
                   var _ref5 = _asyncToGenerator(
                   /*#__PURE__*/
-                  _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(resolve, reject) {
+                  _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(resolve, reject) {
                     var token, resp;
-                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
                       while (1) {
-                        switch (_context4.prev = _context4.next) {
+                        switch (_context3.prev = _context3.next) {
                           case 0:
-                            _context4.prev = 0;
-                            _context4.next = 3;
+                            _context3.prev = 0;
+                            _context3.next = 3;
                             return _this.getToken();
 
                           case 3:
-                            token = _context4.sent;
-                            _context4.next = 6;
+                            token = _context3.sent;
+                            _context3.next = 6;
                             return axios__WEBPACK_IMPORTED_MODULE_4___default.a.get(path, _objectSpread({}, headers, {
                               headers: {
                                 "X-CSRF-TOKEN": token
@@ -58418,45 +58397,45 @@ function (_Component) {
                             }));
 
                           case 6:
-                            resp = _context4.sent;
-                            return _context4.abrupt("return", resolve(resp));
+                            resp = _context3.sent;
+                            return _context3.abrupt("return", resolve(resp));
 
                           case 10:
-                            _context4.prev = 10;
-                            _context4.t0 = _context4["catch"](0);
+                            _context3.prev = 10;
+                            _context3.t0 = _context3["catch"](0);
 
-                            if (!_context4.t0.response) {
-                              _context4.next = 16;
+                            if (!_context3.t0.response) {
+                              _context3.next = 16;
                               break;
                             }
 
-                            return _context4.abrupt("return", reject(_context4.t0.response.data.value));
+                            return _context3.abrupt("return", reject(_context3.t0.response.data.value));
 
                           case 16:
-                            return _context4.abrupt("return", reject(_context4.t0));
+                            return _context3.abrupt("return", reject(_context3.t0));
 
                           case 17:
                           case "end":
-                            return _context4.stop();
+                            return _context3.stop();
                         }
                       }
-                    }, _callee4, null, [[0, 10]]);
+                    }, _callee3, null, [[0, 10]]);
                   }));
 
-                  return function (_x4, _x5) {
+                  return function (_x3, _x4) {
                     return _ref5.apply(this, arguments);
                   };
                 }()));
 
               case 2:
               case "end":
-                return _context5.stop();
+                return _context4.stop();
             }
           }
-        }, _callee5);
+        }, _callee4);
       }));
 
-      return function (_x3) {
+      return function (_x2) {
         return _ref4.apply(this, arguments);
       };
     }());
@@ -58466,32 +58445,32 @@ function (_Component) {
     function () {
       var _ref6 = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7(path, data) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6(path, data) {
         var headers,
-            _args7 = arguments;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+            _args6 = arguments;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
-            switch (_context7.prev = _context7.next) {
+            switch (_context6.prev = _context6.next) {
               case 0:
-                headers = _args7.length > 2 && _args7[2] !== undefined ? _args7[2] : {};
-                return _context7.abrupt("return", new Promise(
+                headers = _args6.length > 2 && _args6[2] !== undefined ? _args6[2] : {};
+                return _context6.abrupt("return", new Promise(
                 /*#__PURE__*/
                 function () {
                   var _ref7 = _asyncToGenerator(
                   /*#__PURE__*/
-                  _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6(resolve, reject) {
+                  _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(resolve, reject) {
                     var token, resp;
-                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
                       while (1) {
-                        switch (_context6.prev = _context6.next) {
+                        switch (_context5.prev = _context5.next) {
                           case 0:
-                            _context6.prev = 0;
-                            _context6.next = 3;
+                            _context5.prev = 0;
+                            _context5.next = 3;
                             return _this.getToken();
 
                           case 3:
-                            token = _context6.sent;
-                            _context6.next = 6;
+                            token = _context5.sent;
+                            _context5.next = 6;
                             return axios__WEBPACK_IMPORTED_MODULE_4___default.a.post(path, data, _objectSpread({}, headers, {
                               headers: {
                                 "X-CSRF-TOKEN": token
@@ -58499,54 +58478,58 @@ function (_Component) {
                             }));
 
                           case 6:
-                            resp = _context6.sent;
-                            return _context6.abrupt("return", resolve(resp));
+                            resp = _context5.sent;
+                            return _context5.abrupt("return", resolve(resp));
 
                           case 10:
-                            _context6.prev = 10;
-                            _context6.t0 = _context6["catch"](0);
+                            _context5.prev = 10;
+                            _context5.t0 = _context5["catch"](0);
 
-                            if (!_context6.t0.response) {
-                              _context6.next = 16;
+                            if (!_context5.t0.response) {
+                              _context5.next = 16;
                               break;
                             }
 
-                            return _context6.abrupt("return", reject(_context6.t0.response.data.value));
+                            return _context5.abrupt("return", reject(_context5.t0.response.data.value));
 
                           case 16:
-                            return _context6.abrupt("return", reject(_context6.t0));
+                            return _context5.abrupt("return", reject(_context5.t0));
 
                           case 17:
                           case "end":
-                            return _context6.stop();
+                            return _context5.stop();
                         }
                       }
-                    }, _callee6, null, [[0, 10]]);
+                    }, _callee5, null, [[0, 10]]);
                   }));
 
-                  return function (_x8, _x9) {
+                  return function (_x7, _x8) {
                     return _ref7.apply(this, arguments);
                   };
                 }()));
 
               case 2:
               case "end":
-                return _context7.stop();
+                return _context6.stop();
             }
           }
-        }, _callee7);
+        }, _callee6);
       }));
 
-      return function (_x6, _x7) {
+      return function (_x5, _x6) {
         return _ref6.apply(this, arguments);
       };
     }());
 
     _this.state = {
       errorMsg: "",
-      successMsg: "",
+      alertMsg: {
+        text: "",
+        status: null
+      },
       userData: {},
-      instruments: []
+      instruments: [],
+      usersList: []
     };
     _this.routes = [{
       path: "/users",
@@ -58554,7 +58537,7 @@ function (_Component) {
       Component: _Users_Users__WEBPACK_IMPORTED_MODULE_9__["default"],
       sidebar: true
     }, {
-      path: "/users/:id",
+      path: "/user/:id",
       name: "User",
       Component: _User_User__WEBPACK_IMPORTED_MODULE_10__["default"],
       sidebar: false
@@ -58572,25 +58555,25 @@ function (_Component) {
     value: function render() {
       var _this$state = this.state,
           userData = _this$state.userData,
-          successMsg = _this$state.successMsg,
-          errorMsg = _this$state.errorMsg,
-          instruments = _this$state.instruments;
+          alertMsg = _this$state.alertMsg,
+          instruments = _this$state.instruments,
+          usersList = _this$state.usersList;
       return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_AppContext__WEBPACK_IMPORTED_MODULE_6__["default"].Provider, {
         value: {
           routes: this.routes,
           nextPath: this.nextPath,
           postRequest: this.postRequest,
           getRequest: this.getRequest,
-          setErrorMsg: this.setErrorMsg,
-          errorMsg: errorMsg,
-          setSuccessMsg: this.setSuccessMsg,
-          successMsg: successMsg,
+          setMsg: this.setMsg,
+          alertMsg: alertMsg,
           userData: userData,
           getUserData: this.getUserData,
           freeUpInstrument: this.freeUpInstrument,
           instruments: instruments,
           getFreeInstruments: this.getFreeInstruments,
-          addInstrument: this.addInstrument
+          addInstrument: this.addInstrument,
+          usersList: usersList,
+          getUsers: this.getUsers
         }
       }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router__WEBPACK_IMPORTED_MODULE_2__["Router"], {
         history: _History__WEBPACK_IMPORTED_MODULE_5__["default"]
@@ -58994,7 +58977,6 @@ var User = function User(_ref) {
     return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, "Loading...");
   }
 
-  console.log(instruments);
   return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "widget__container"
   }, modal && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_FreeInstrumentsList_FreeInstrumentsList__WEBPACK_IMPORTED_MODULE_5__["default"], {
@@ -59214,11 +59196,15 @@ function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = 
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
 
 
 
 
-var AddNewUser = function AddNewUser(props) {
+
+var AddNewUser = function AddNewUser(_ref) {
+  _objectDestructuringEmpty(_ref);
+
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(""),
       _useState2 = _slicedToArray(_useState, 2),
       name = _useState2[0],
@@ -59232,20 +59218,27 @@ var AddNewUser = function AddNewUser(props) {
   var context = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_AppContext__WEBPACK_IMPORTED_MODULE_2__["default"]);
 
   var addNewUser = function addNewUser(name, surname) {
-    context.postRequest("/user", {
+    context.postRequest("/v1/user/new", {
       name: name,
       surname: surname
     }).then(function (resp) {
-      try {
-        context.setSuccessMsg(resp.data.value);
-      } catch (err) {
-        context.setSuccessMsg("Done.");
-      }
+      context.setMsg({
+        text: resp.data.value,
+        status: 1,
+        clear: true
+      });
+      context.getUsers();
     })["catch"](function (err) {
-      return context.setErrorMsg(err);
+      return context.setMsg({
+        text: err,
+        status: 2,
+        clear: true
+      });
     });
   };
 
+  var alertMsg = context.alertMsg;
+  console.log(alertMsg);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "widget__container"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Helpers_InputHook__WEBPACK_IMPORTED_MODULE_1__["default"], {
@@ -59263,7 +59256,9 @@ var AddNewUser = function AddNewUser(props) {
     onClick: function onClick() {
       addNewUser(name, surname);
     }
-  }, "Dodaj"));
+  }, "Dodaj"), alertMsg.text && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "alert ".concat(alertMsg.status == 1 ? "alert-success" : "alert-danger")
+  }, alertMsg.text));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (AddNewUser);
@@ -59324,26 +59319,20 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Users).call(this, props));
 
     _defineProperty(_assertThisInitialized(_this), "componentDidMount", function () {
-      _this.getUsers();
+      _this.context.getUsers();
     });
 
-    _defineProperty(_assertThisInitialized(_this), "getUsers", function () {
-      _this.context.getRequest("/users_list").then(function (res) {
-        return _this.setState({
-          usersList: res.data.value
-        });
-      })["catch"](_this.context.setErrorMsg);
-    });
-
-    _this.state = {
-      usersList: []
-    };
+    _this.state = {};
     return _this;
   }
 
   _createClass(Users, [{
     key: "render",
     value: function render() {
+      var _this$context = this.context,
+          nextPath = _this$context.nextPath,
+          getUserData = _this$context.getUserData,
+          usersList = _this$context.usersList;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "content__container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -59351,7 +59340,9 @@ function (_Component) {
       }, "Users"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "content__body"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Helpers_AlertPanel_AlertPanel__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AddNewUser_AddNewUser__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_UsersList_UsersList__WEBPACK_IMPORTED_MODULE_4__["default"], {
-        usersList: this.state.usersList
+        usersList: usersList,
+        nextPath: nextPath,
+        getUserData: getUserData
       })));
     }
   }]);
@@ -59361,77 +59352,6 @@ function (_Component) {
 
 Users.contextType = _AppContext__WEBPACK_IMPORTED_MODULE_1__["default"];
 /* harmony default export */ __webpack_exports__["default"] = (Users);
-
-/***/ }),
-
-/***/ "./resources/js/components/Users/UsersList/UserListItem/InstrumentAction/AddNewInstrument.js":
-/*!***************************************************************************************************!*\
-  !*** ./resources/js/components/Users/UsersList/UserListItem/InstrumentAction/AddNewInstrument.js ***!
-  \***************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-
-
-var AddNewInstrument = function AddNewInstrument(props) {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    className: "btn btn-success"
-  }, "Dodaj");
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (AddNewInstrument);
-
-/***/ }),
-
-/***/ "./resources/js/components/Users/UsersList/UserListItem/InstrumentAction/InstrumentAction.js":
-/*!***************************************************************************************************!*\
-  !*** ./resources/js/components/Users/UsersList/UserListItem/InstrumentAction/InstrumentAction.js ***!
-  \***************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _RemoveInstrument__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RemoveInstrument */ "./resources/js/components/Users/UsersList/UserListItem/InstrumentAction/RemoveInstrument.js");
-/* harmony import */ var _AddNewInstrument__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AddNewInstrument */ "./resources/js/components/Users/UsersList/UserListItem/InstrumentAction/AddNewInstrument.js");
-
-
-
-
-var InstrumentAction = function InstrumentAction(props) {
-  return props.catalogNo ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_RemoveInstrument__WEBPACK_IMPORTED_MODULE_1__["default"], null) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AddNewInstrument__WEBPACK_IMPORTED_MODULE_2__["default"], null);
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (InstrumentAction);
-
-/***/ }),
-
-/***/ "./resources/js/components/Users/UsersList/UserListItem/InstrumentAction/RemoveInstrument.js":
-/*!***************************************************************************************************!*\
-  !*** ./resources/js/components/Users/UsersList/UserListItem/InstrumentAction/RemoveInstrument.js ***!
-  \***************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-
-
-var RemoveInstrument = function RemoveInstrument(props) {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    className: "btn btn-danger"
-  }, "Usu\u0144");
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (RemoveInstrument);
 
 /***/ }),
 
@@ -59446,18 +59366,19 @@ var RemoveInstrument = function RemoveInstrument(props) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _InstrumentAction_InstrumentAction__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./InstrumentAction/InstrumentAction */ "./resources/js/components/Users/UsersList/UserListItem/InstrumentAction/InstrumentAction.js");
 
 
-
-var UserListItem = function UserListItem(props) {
-  var instrument = props.user.users_instruments ? props.user.users_instruments.instruments.name.name : "";
-  var catalogNo = props.user.users_instruments ? props.user.users_instruments.instruments.catalog_id : "";
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, props.user.id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, props.user.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, props.user.surname), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, instrument), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, catalogNo), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_InstrumentAction_InstrumentAction__WEBPACK_IMPORTED_MODULE_1__["default"], {
-    catalogNo: catalogNo
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    className: "btn btn-info"
-  }, "Historia")));
+var UserListItem = function UserListItem(_ref) {
+  var user = _ref.user,
+      nextPath = _ref.nextPath;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "user__container"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, user.id, " - ", user.name, " ", user.surname), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "btn btn-primary",
+    onClick: nextPath
+  }, "Szczeg\xF3\u0142y"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "btn btn-danger"
+  }, "Usu\u0144")));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (UserListItem);
@@ -59479,13 +59400,23 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var UsersList = function UsersList(props) {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "ID"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Imie"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Nazwisko"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Instrument"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Nr kat."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, props.usersList.map(function (elem) {
+var UsersList = function UsersList(_ref) {
+  var usersList = _ref.usersList,
+      _nextPath = _ref.nextPath,
+      getUserData = _ref.getUserData;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "users-list__container"
+  }, usersList.map(function (elem) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_UserListItem_UserListItem__WEBPACK_IMPORTED_MODULE_1__["default"], {
       key: "user_".concat(elem.id),
-      user: elem
+      user: elem,
+      nextPath: function nextPath() {
+        getUserData(elem.id);
+
+        _nextPath("/user/".concat(elem.id));
+      }
     });
-  }))));
+  }));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (UsersList);

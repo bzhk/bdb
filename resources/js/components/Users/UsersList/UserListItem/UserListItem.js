@@ -1,18 +1,20 @@
 import React from "react";
-import InstrumentAction from "./InstrumentAction/InstrumentAction";
-const UserListItem = props => {
-    const instrument = props.user.users_instruments ? props.user.users_instruments.instruments.name.name: "";
-    const catalogNo = props.user.users_instruments ? props.user.users_instruments.instruments.catalog_id: "";
+
+const UserListItem = ({ user, nextPath }) => {
     return (
-        <tr>
-            <td>{props.user.id}</td>
-            <td>{props.user.name}</td>
-            <td>{props.user.surname}</td>
-            <td>{instrument}</td>
-            <td>{catalogNo}</td>
-            <td><InstrumentAction catalogNo={catalogNo}/></td>
-            <td><button className="btn btn-info">Historia</button></td>
-        </tr>
+        <div className="user__container">
+            <div>
+                {user.id} - {user.name} {user.surname}
+            </div>
+            <div>
+                <button className="btn btn-primary" onClick={nextPath}>
+                    Szczegóły
+                </button>
+                <button className="btn btn-danger">
+                    Usuń
+                </button>
+            </div>
+        </div>
     );
 };
 

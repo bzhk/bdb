@@ -17,9 +17,13 @@ class App extends Component {
 
         this.state = {
             errorMsg: "",
-            successMsg: "",
+            alertMsg: {
+                text: "",
+                status: null
+            },
             userData: {},
-            instruments: []
+            instruments: [],
+            usersList: []
         };
 
         this.routes = [
@@ -30,7 +34,7 @@ class App extends Component {
                 sidebar: true
             },
             {
-                path: "/users/:id",
+                path: "/user/:id",
                 name: "User",
                 Component: User,
                 sidebar: false
@@ -62,6 +66,14 @@ class App extends Component {
         });
     };
 
+    getUsers = () => {
+        this.getRequest("/v1/users")
+            .then(res => {
+                this.setState({ usersList: res.data.value });
+            })
+            .catch(this.setErrorMsg);
+    };
+
     getUserData = id => {
         this.getRequest(`/v1/user/${id}`)
             .then(res => {
@@ -75,35 +87,38 @@ class App extends Component {
     };
 
     addInstrument = (userId, catalogId) => {
-        this.postRequest('/v1/instruments/add',{userId, catalogId})
-        .then(res => {console.log(res)})
-        .catch(err => console.log(err))
-    }
+        this.postRequest("/v1/instruments/add", { userId, catalogId })
+            .then(res => {
+                console.log(res);
+            })
+            .catch(err => console.log(err));
+    };
 
     getFreeInstruments = () => {
         this.getRequest("/v1/instruments")
             .then(res => {
-         
                 this.setState({ instruments: res.data.value });
             })
             .catch(err => console.log(err));
     };
 
     freeUpInstrument = catalogId => {
-        console.log(catalogId);
         this.postRequest("/v1/instrument/freeup", { catalogId })
             .then(res => console.log(res))
             .catch(err => console.log(err));
     };
 
-    setErrorMsg = async msg => {
-        await this.setState({ errorMsg: msg });
-        setTimeout(() => this.setState({ errorMsg: "" }, 1500));
-    };
 
-    setSuccessMsg = async msg => {
-        await this.setState({ successMsg: msg });
-        setTimeout(() => this.setState({ successMsg: "" }, 1500));
+
+    setMsg = async ({text, status, clear}) => {
+        const msg = {
+            text,
+            status
+        }
+        await this.setState({ alertMsg: msg });
+        if(clear) setTimeout(() => this.setMsg({ text: "", status: null, clear: false }), 2000);
+        
+       
     };
 
     getRequest = async (path, headers = {}) => {
@@ -149,7 +164,12 @@ class App extends Component {
     };
 
     render() {
-        const { userData, successMsg, errorMsg, instruments} = this.state;
+        const {
+            userData,
+            alertMsg,
+            instruments,
+            usersList
+        } = this.state;
         return (
             <AppContext.Provider
                 value={{
@@ -157,16 +177,16 @@ class App extends Component {
                     nextPath: this.nextPath,
                     postRequest: this.postRequest,
                     getRequest: this.getRequest,
-                    setErrorMsg: this.setErrorMsg,
-                    errorMsg,
-                    setSuccessMsg: this.setSuccessMsg,
-                    successMsg,
+                    setMsg: this.setMsg,
+                    alertMsg,
                     userData,
                     getUserData: this.getUserData,
                     freeUpInstrument: this.freeUpInstrument,
                     instruments,
                     getFreeInstruments: this.getFreeInstruments,
-                    addInstrument: this.addInstrument
+                    addInstrument: this.addInstrument,
+                    usersList,
+                    getUsers: this.getUsers
                 }}
             >
                 <Router history={history}>

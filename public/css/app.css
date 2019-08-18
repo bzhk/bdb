@@ -11187,6 +11187,23 @@ a.text-dark:focus {
   margin: 10px;
 }
 
+.users-list__container {
+  width: 100%;
+}
+
+.user__container {
+  width: 100%;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  -webkit-align-items: center;
+          align-items: center;
+  background: #fff;
+  padding: 10px;
+  margin: 5px 0;
+}
+
 .user-header__container {
   font-size: 30px;
   font-weight: bold;
