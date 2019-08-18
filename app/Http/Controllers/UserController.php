@@ -76,7 +76,7 @@ class UserController extends Controller
             $id = $req->id;
            
             
-        $users = UserModel::with(['usersInstruments.instruments.name'])
+        $users = UserModel::with(['instruments.name'])
                 ->where('id',$id)
                 ->first();
             return response(['status'=>'ok', 'value'=>$users],200);

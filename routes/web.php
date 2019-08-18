@@ -17,14 +17,17 @@ Route::get('/', function () {
 
 Route::prefix('v1')->group(function () { 
     Route::get('/users','UserController@get');
-    Route::post('/users/new','UserController@create');
-    Route::get('/users/{id}','UserController@getUser');
-    Route::post('instrument/freeup','UsersInstrumentsController@freeupInstrument');
+    Route::post('/user/new','UserController@create');
+    Route::get('/user/{id}','UserController@getUser');
+
+    Route::get('instruments','InstrumentsController@getInstrumentsList');
+    Route::post('instruments/add','InstrumentsController@setNewInstrumentsOwner');
+    Route::post('instrument/freeup','InstrumentsController@freeupInstrument');
 });
 
 
 
-Route::get('/list/filter','UsersInstrumentsController@getUsers');
+// Route::get('/list/filter','UsersInstrumentsController@getUsers');
 
 Route::get('{slug}', function () {
     return view('welcome');

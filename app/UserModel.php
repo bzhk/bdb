@@ -9,8 +9,8 @@ class UserModel extends Model
     protected $table = 'users';
     protected $hidden = ['created_at','updated_at'];
 
-    public function usersInstruments()
+    public function instruments()
     {
-        return $this->hasMany('App\UsersInstrumentModel','user_id','id');
+        return $this->hasMany('App\InstrumentModel','user_id','id');
     }
 }

@@ -3,8 +3,8 @@ const InstrumentsListItem = ({ elem, freeUpInstrument }) => {
     return (
         <div className="instruments-item__container">
             <div>
-                {elem.id} - {elem.instruments.catalog_id} -{" "}
-                {elem.instruments.name.name}
+                {elem.id} - {elem.catalog_id} -{" "}
+                {elem.name.name}
             </div>
 
             <div>

@@ -58268,7 +58268,7 @@ function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "getUserData", function (id) {
-      _this.getRequest("/v1/users/".concat(id)).then(function (res) {
+      _this.getRequest("/v1/user/".concat(id)).then(function (res) {
         _this.setState({
           userData: res.data.value
         });
@@ -58277,10 +58277,32 @@ function (_Component) {
       });
     });
 
-    _defineProperty(_assertThisInitialized(_this), "freeUpInstrument", function (userId, instrumentId) {
-      _this.postRequest("/v1/instrument/freeup", {
+    _defineProperty(_assertThisInitialized(_this), "addInstrument", function (userId, catalogId) {
+      _this.postRequest('/v1/instruments/add', {
         userId: userId,
-        instrumentId: instrumentId
+        catalogId: catalogId
+      }).then(function (res) {
+        console.log(res);
+      })["catch"](function (err) {
+        return console.log(err);
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "getFreeInstruments", function () {
+      _this.getRequest("/v1/instruments").then(function (res) {
+        _this.setState({
+          instruments: res.data.value
+        });
+      })["catch"](function (err) {
+        return console.log(err);
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "freeUpInstrument", function (catalogId) {
+      console.log(catalogId);
+
+      _this.postRequest("/v1/instrument/freeup", {
+        catalogId: catalogId
       }).then(function (res) {
         return console.log(res);
       })["catch"](function (err) {
@@ -58523,7 +58545,8 @@ function (_Component) {
     _this.state = {
       errorMsg: "",
       successMsg: "",
-      userData: {}
+      userData: {},
+      instruments: []
     };
     _this.routes = [{
       path: "/users",
@@ -58550,7 +58573,8 @@ function (_Component) {
       var _this$state = this.state,
           userData = _this$state.userData,
           successMsg = _this$state.successMsg,
-          errorMsg = _this$state.errorMsg;
+          errorMsg = _this$state.errorMsg,
+          instruments = _this$state.instruments;
       return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_AppContext__WEBPACK_IMPORTED_MODULE_6__["default"].Provider, {
         value: {
           routes: this.routes,
@@ -58563,7 +58587,10 @@ function (_Component) {
           successMsg: successMsg,
           userData: userData,
           getUserData: this.getUserData,
-          freeUpInstrument: this.freeUpInstrument
+          freeUpInstrument: this.freeUpInstrument,
+          instruments: instruments,
+          getFreeInstruments: this.getFreeInstruments,
+          addInstrument: this.addInstrument
         }
       }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router__WEBPACK_IMPORTED_MODULE_2__["Router"], {
         history: _History__WEBPACK_IMPORTED_MODULE_5__["default"]
@@ -58845,6 +58872,71 @@ Sidebar.contextType = _AppContext__WEBPACK_IMPORTED_MODULE_1__["default"];
 
 /***/ }),
 
+/***/ "./resources/js/components/User/FreeInstrumentsList/FreeInstrumentsList.js":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/components/User/FreeInstrumentsList/FreeInstrumentsList.js ***!
+  \*********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _globals_Modal_Modal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../globals/Modal/Modal */ "./resources/js/components/globals/Modal/Modal.js");
+/* harmony import */ var _InstrumentItem_InstrumentItem__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./InstrumentItem/InstrumentItem */ "./resources/js/components/User/FreeInstrumentsList/InstrumentItem/InstrumentItem.js");
+
+
+
+
+var FreeInstrumentsList = function FreeInstrumentsList(_ref) {
+  var instruments = _ref.instruments,
+      closeModal = _ref.closeModal,
+      _addInstrument = _ref.addInstrument;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_globals_Modal_Modal__WEBPACK_IMPORTED_MODULE_1__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "btn btn-danger",
+    onClick: closeModal
+  }, "X"), instruments.map(function (elem) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_InstrumentItem_InstrumentItem__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      key: elem.id,
+      elem: elem,
+      addInstrument: function addInstrument() {
+        return _addInstrument(elem.catalog_id);
+      }
+    });
+  }));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (FreeInstrumentsList);
+
+/***/ }),
+
+/***/ "./resources/js/components/User/FreeInstrumentsList/InstrumentItem/InstrumentItem.js":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/User/FreeInstrumentsList/InstrumentItem/InstrumentItem.js ***!
+  \*******************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var InstrumentItem = function InstrumentItem(_ref) {
+  var elem = _ref.elem,
+      addInstrument = _ref.addInstrument;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, elem.name.name, " - ", elem.catalog_id), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "btn btn-info",
+    onClick: addInstrument
+  }, "Dodaj"));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (InstrumentItem);
+
+/***/ }),
+
 /***/ "./resources/js/components/User/User.js":
 /*!**********************************************!*\
   !*** ./resources/js/components/User/User.js ***!
@@ -58854,11 +58946,29 @@ Sidebar.contextType = _AppContext__WEBPACK_IMPORTED_MODULE_1__["default"];
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _UserHeader_UserHeader__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UserHeader/UserHeader */ "./resources/js/components/User/UserHeader/UserHeader.js");
-/* harmony import */ var _UserBody_UserBody__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./UserBody/UserBody */ "./resources/js/components/User/UserBody/UserBody.js");
-/* harmony import */ var _AppContext__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../AppContext */ "./resources/js/AppContext.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _UserHeader_UserHeader__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./UserHeader/UserHeader */ "./resources/js/components/User/UserHeader/UserHeader.js");
+/* harmony import */ var _UserBody_UserBody__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./UserBody/UserBody */ "./resources/js/components/User/UserBody/UserBody.js");
+/* harmony import */ var _AppContext__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../AppContext */ "./resources/js/AppContext.js");
+/* harmony import */ var _FreeInstrumentsList_FreeInstrumentsList__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./FreeInstrumentsList/FreeInstrumentsList */ "./resources/js/components/User/FreeInstrumentsList/FreeInstrumentsList.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
 
 
 
@@ -58866,26 +58976,64 @@ __webpack_require__.r(__webpack_exports__);
 
 var User = function User(_ref) {
   var match = _ref.match;
-  var context = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_AppContext__WEBPACK_IMPORTED_MODULE_3__["default"]);
+  var context = Object(react__WEBPACK_IMPORTED_MODULE_1__["useContext"])(_AppContext__WEBPACK_IMPORTED_MODULE_4__["default"]);
   var getUserData = context.getUserData,
       userData = context.userData,
-      _freeUpInstrument = context.freeUpInstrument;
+      freeUpInstrument = context.freeUpInstrument,
+      instruments = context.instruments,
+      getFreeInstruments = context.getFreeInstruments,
+      _addInstrument = context.addInstrument;
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      modal = _useState2[0],
+      setModal = _useState2[1];
 
   if (!Object.keys(userData).length) {
     getUserData(match.params.id);
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Loading...");
+    return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, "Loading...");
   }
 
-  console.log(userData);
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  console.log(instruments);
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "widget__container"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_UserHeader_UserHeader__WEBPACK_IMPORTED_MODULE_1__["default"], {
-    userData: userData
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_UserBody_UserBody__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    instruments: userData.users_instruments,
-    freeUpInstrument: function freeUpInstrument(instrument_id) {
-      return _freeUpInstrument(userData.id, instrument_id);
+  }, modal && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_FreeInstrumentsList_FreeInstrumentsList__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    closeModal: function closeModal() {
+      return setModal(false);
+    },
+    instruments: instruments,
+    addInstrument: function addInstrument(instrumentCatalogId) {
+      _addInstrument(userData.id, instrumentCatalogId);
+
+      setModal(false);
     }
+  }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_UserHeader_UserHeader__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    userData: userData
+  }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_UserBody_UserBody__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    openModal:
+    /*#__PURE__*/
+    _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return getFreeInstruments();
+
+            case 2:
+              setModal(true);
+
+            case 3:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    })),
+    instruments: userData.instruments,
+    freeUpInstrument: freeUpInstrument
   }));
 };
 
@@ -58912,13 +59060,16 @@ __webpack_require__.r(__webpack_exports__);
 
 var UserBody = function UserBody(_ref) {
   var instruments = _ref.instruments,
-      freeUpInstrument = _ref.freeUpInstrument;
+      freeUpInstrument = _ref.freeUpInstrument,
+      openModal = _ref.openModal;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "user-body__container"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_UsersInstrumentsList_UsersInstrumentsList__WEBPACK_IMPORTED_MODULE_2__["default"], {
     instruments: instruments,
     freeUpInstrument: freeUpInstrument
-  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_UserBtnsSection_UserBtnsSection__WEBPACK_IMPORTED_MODULE_1__["default"], null));
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_UserBtnsSection_UserBtnsSection__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    openModal: openModal
+  }));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (UserBody);
@@ -58936,17 +59087,15 @@ var UserBody = function UserBody(_ref) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
-
 
 
 var UserBtnsSection = function UserBtnsSection(_ref) {
-  _objectDestructuringEmpty(_ref);
-
+  var openModal = _ref.openModal;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "user-btns-section__container"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    className: "btn btn-info"
+    className: "btn btn-info",
+    onClick: openModal
   }, "Dodaj instrument"));
 };
 
@@ -58972,7 +59121,7 @@ var InstrumentsListItem = function InstrumentsListItem(_ref) {
       freeUpInstrument = _ref.freeUpInstrument;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "instruments-item__container"
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, elem.id, " - ", elem.instruments.catalog_id, " -", " ", elem.instruments.name.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, elem.id, " - ", elem.catalog_id, " -", " ", elem.name.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     className: "btn btn-danger",
     onClick: freeUpInstrument
   }, "Usu\u0144")));
@@ -59007,7 +59156,7 @@ var UsersInstrumentsList = function UsersInstrumentsList(_ref) {
       key: elem.id,
       elem: elem,
       freeUpInstrument: function freeUpInstrument() {
-        return _freeUpInstrument(elem.id);
+        return _freeUpInstrument(elem.catalog_id);
       }
     });
   }));
@@ -59340,6 +59489,34 @@ var UsersList = function UsersList(props) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (UsersList);
+
+/***/ }),
+
+/***/ "./resources/js/components/globals/Modal/Modal.js":
+/*!********************************************************!*\
+  !*** ./resources/js/components/globals/Modal/Modal.js ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var Modal = function Modal(_ref) {
+  var children = _ref.children;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "modal__wrapper"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "modal__overlay"
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "modal__container"
+  }, children));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Modal);
 
 /***/ }),
 

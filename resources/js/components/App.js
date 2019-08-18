@@ -18,7 +18,8 @@ class App extends Component {
         this.state = {
             errorMsg: "",
             successMsg: "",
-            userData: {}
+            userData: {},
+            instruments: []
         };
 
         this.routes = [
@@ -62,7 +63,7 @@ class App extends Component {
     };
 
     getUserData = id => {
-        this.getRequest(`/v1/users/${id}`)
+        this.getRequest(`/v1/user/${id}`)
             .then(res => {
                 this.setState({
                     userData: res.data.value
@@ -73,8 +74,24 @@ class App extends Component {
             });
     };
 
-    freeUpInstrument = (userId, instrumentId) => {
-        this.postRequest("/v1/instrument/freeup", { userId, instrumentId })
+    addInstrument = (userId, catalogId) => {
+        this.postRequest('/v1/instruments/add',{userId, catalogId})
+        .then(res => {console.log(res)})
+        .catch(err => console.log(err))
+    }
+
+    getFreeInstruments = () => {
+        this.getRequest("/v1/instruments")
+            .then(res => {
+         
+                this.setState({ instruments: res.data.value });
+            })
+            .catch(err => console.log(err));
+    };
+
+    freeUpInstrument = catalogId => {
+        console.log(catalogId);
+        this.postRequest("/v1/instrument/freeup", { catalogId })
             .then(res => console.log(res))
             .catch(err => console.log(err));
     };
@@ -132,7 +149,7 @@ class App extends Component {
     };
 
     render() {
-        const { userData, successMsg, errorMsg } = this.state;
+        const { userData, successMsg, errorMsg, instruments} = this.state;
         return (
             <AppContext.Provider
                 value={{
@@ -146,7 +163,10 @@ class App extends Component {
                     successMsg,
                     userData,
                     getUserData: this.getUserData,
-                    freeUpInstrument: this.freeUpInstrument
+                    freeUpInstrument: this.freeUpInstrument,
+                    instruments,
+                    getFreeInstruments: this.getFreeInstruments,
+                    addInstrument: this.addInstrument
                 }}
             >
                 <Router history={history}>

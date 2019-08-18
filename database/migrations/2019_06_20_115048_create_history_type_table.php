@@ -14,9 +14,11 @@ class CreateHistoryTypeTable extends Migration
     public function up()
     {
         Schema::create('history_type', function (Blueprint $table) {
-            $table->integer('id')->unique();
+            $table->integer('id')->unsigned();
             $table->string('name');
             $table->timestamps();
+
+            $table->primary('id');
         });
     }
 

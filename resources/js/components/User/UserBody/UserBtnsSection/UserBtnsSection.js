@@ -1,8 +1,8 @@
 import React from 'react';
-const UserBtnsSection = ({}) => 
+const UserBtnsSection = ({openModal}) => 
 {
 return <div className="user-btns-section__container">
-    <button className="btn btn-info">Dodaj instrument</button>
+    <button className="btn btn-info" onClick={openModal}>Dodaj instrument</button>
 </div>;
 }
 export default UserBtnsSection;
