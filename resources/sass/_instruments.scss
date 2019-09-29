@@ -3,3 +3,22 @@
     width: 100%;
     flex-direction: column;
 }
+
+.instrument-content__container {
+    padding: 10px;
+    background-color: #fff7d0;
+}
+
+.instruments-table__container {
+    width: 100%;
+    thead {
+        th {
+            margin: 0 10px;
+        }
+    }
+    tbody {
+        tr {
+            padding: 5px 0;
+        }
+    }
+}

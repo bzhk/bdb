@@ -77,7 +77,7 @@ class InstrumentsController extends Controller
     }
     public function getAllInstrumentsList(Request $req)
     {
-        $list = InstrumentModel::get();
+        $list = InstrumentModel::with(['name','user'])->get();
         return response(['status'=>'OK','value' => $list], 200);
     }
     

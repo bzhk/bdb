@@ -11302,3 +11302,20 @@ a.text-dark:focus {
           flex-direction: column;
 }
 
+.instrument-content__container {
+  padding: 10px;
+  background-color: #fff7d0;
+}
+
+.instruments-table__container {
+  width: 100%;
+}
+
+.instruments-table__container thead th {
+  margin: 0 10px;
+}
+
+.instruments-table__container tbody tr {
+  padding: 5px 0;
+}
+
