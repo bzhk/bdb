@@ -11252,14 +11252,21 @@ a.text-dark:focus {
   z-index: 101;
 }
 
-.type-list__container {
-  width: 30%;
+.modal-content__container {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+}
+
+.type-form-add__container {
+  margin: 10px 0;
 }
 
 .type-item__container {
   background: #fff;
   padding: 10px;
-  width: 100%;
+  width: 50%;
   display: -webkit-flex;
   display: flex;
   -webkit-justify-content: space-between;
@@ -11276,15 +11283,22 @@ a.text-dark:focus {
           justify-content: space-around;
   -webkit-align-items: center;
           align-items: center;
+  margin: 0 10px;
 }
 
 .type-item__btns button {
   margin-right: 5px;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+          flex-wrap: nowrap;
 }
 
 .instruments__view {
   display: -webkit-flex;
   display: flex;
   width: 100%;
+  -webkit-flex-direction: column;
+          flex-direction: column;
 }
 

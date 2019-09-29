@@ -24,7 +24,6 @@ const AddNewUser = ({}) => {
     };
 
     const { alertMsg } = context;
-    console.log(alertMsg);
 
     return (
         <div className="widget__container">

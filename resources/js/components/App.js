@@ -137,23 +137,24 @@ class App extends Component {
                 this.setMsg({ text: res.data.value, type: 1, clear: true });
                 this.getTypes();
             })
-            .catch(err =>
-             {   
-                this.setMsg({ text: err, type: 2, clear: true })}
-            );
+            .catch(err => {
+                this.setMsg({ text: err, type: 2, clear: true });
+            });
     };
 
     removeType = id => {
         this.postRequest("/v1/type/remove", { id })
-        .then(res => {
-            this.setMsg({ text: res.data.value, type: 1, clear: true });
-            this.getTypes();
-        })
-        .catch(err =>
-         {   
-            this.setMsg({ text: err, type: 2, clear: true })}
-        );
-    }
+            .then(res => {
+                this.setMsg({ text: res.data.value, type: 1, clear: true });
+                this.getTypes();
+            })
+            .catch(err => {
+                this.setMsg({ text: err, type: 2, clear: true });
+            });
+    };
+
+    createInstrumentModal = () => {};
+
     setMsg = async ({ text, status, clear }) => {
         const msg = {
             text,
@@ -210,7 +211,13 @@ class App extends Component {
     };
 
     render() {
-        const { userData, alertMsg, instruments, usersList, typesList } = this.state;
+        const {
+            userData,
+            alertMsg,
+            instruments,
+            usersList,
+            typesList
+        } = this.state;
         return (
             <AppContext.Provider
                 value={{
@@ -233,7 +240,8 @@ class App extends Component {
                     typesList,
                     newType: this.newType,
                     getTypes: this.getTypes,
-                    removeType: this.removeType
+                    removeType: this.removeType,
+                    createInstrumentModal: this.createInstrumentModal
                 }}
             >
                 <Router history={history}>

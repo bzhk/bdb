@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 
-const NewType = ({createNewType}) => {
+const NewType = ({ createNewType }) => {
     const [newType, setNewType] = useState("");
 
     return (
-        <div>
+        <div className="type-form-add__container">
             <div className="form-group">
                 <label htmlFor="new-type">Dodaj nowy typ</label>
                 <input

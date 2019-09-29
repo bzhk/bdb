@@ -57,4 +57,28 @@ class InstrumentsController extends Controller
 
         return;
     }
+
+    public function createnewInstrument(Request $req){
+        $id = $req->id;
+        $typeId = $req->typeId;
+        $note = $req->note;
+        try{
+        $new_isntrument = new InstrumentModel;
+        $new_isntrument->catalog_id = $id;
+        $new_isntrument->instruments_name_id = $typeId;
+        $new_isntrument->note = $note;
+        $new_isntrument->save();
+        return response(['status'=>'OK'], 200);
+        }catch(Error $e)
+        {      
+            $msg = $this->parseErrorResponse($e->getMessage());
+            return response(['status'=>'error', 'value'=>$msg], 500);
+        }  
+    }
+    public function getAllInstrumentsList(Request $req)
+    {
+        $list = InstrumentModel::get();
+        return response(['status'=>'OK','value' => $list], 200);
+    }
+    
 }

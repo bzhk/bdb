@@ -1,21 +1,25 @@
-.type-list__container{
-    width: 30%;
+.type-list__container {
 }
-
-.type-item__container{
+.type-form-add__container {
+    margin: 10px 0;
+}
+.type-item__container {
     background: #fff;
     padding: 10px;
-    width: 100%;
+    width: 50%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 5px 0;
 }
-.type-item__btns{
+.type-item__btns {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    button{
+    margin: 0 10px;
+    button {
         margin-right: 5px;
+        display: flex;
+        flex-wrap: nowrap;
     }
 }

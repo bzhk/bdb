@@ -58386,6 +58386,8 @@ function (_Component) {
       });
     });
 
+    _defineProperty(_assertThisInitialized(_this), "createInstrumentModal", function () {});
+
     _defineProperty(_assertThisInitialized(_this), "setMsg",
     /*#__PURE__*/
     function () {
@@ -58651,7 +58653,8 @@ function (_Component) {
           typesList: typesList,
           newType: this.newType,
           getTypes: this.getTypes,
-          removeType: this.removeType
+          removeType: this.removeType,
+          createInstrumentModal: this.createInstrumentModal
         }
       }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_router__WEBPACK_IMPORTED_MODULE_2__["Router"], {
         history: _History__WEBPACK_IMPORTED_MODULE_5__["default"]
@@ -58808,7 +58811,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Types_Types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Types/Types */ "./resources/js/components/Instruments/Types/Types.js");
 /* harmony import */ var _InstrumentsList_InstrumentsList__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./InstrumentsList/InstrumentsList */ "./resources/js/components/Instruments/InstrumentsList/InstrumentsList.js");
 /* harmony import */ var _AppContext__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../AppContext */ "./resources/js/AppContext.js");
+/* harmony import */ var _NewInstrumentModal_NewInstrumentModal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NewInstrumentModal/NewInstrumentModal */ "./resources/js/components/Instruments/NewInstrumentModal/NewInstrumentModal.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
+
 
 
 
@@ -58819,11 +58832,23 @@ var Instruments = function Instruments(_ref) {
   _objectDestructuringEmpty(_ref);
 
   var context = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_AppContext__WEBPACK_IMPORTED_MODULE_3__["default"]);
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      newInstrumentModal = _useState2[0],
+      setNewInstrumentModal = _useState2[1];
+
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
+      _useState4 = _slicedToArray(_useState3, 2),
+      typeId = _useState4[0],
+      setTypeId = _useState4[1];
+
   var newType = context.newType,
       alertMsg = context.alertMsg,
       getTypes = context.getTypes,
       typesList = context.typesList,
-      removeType = context.removeType;
+      removeType = context.removeType,
+      createInstrumentModal = context.createInstrumentModal;
 
   if (!typesList.length) {
     getTypes();
@@ -58835,13 +58860,21 @@ var Instruments = function Instruments(_ref) {
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "content__header"
   }, "Instrumenty"), alertMsg.text && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "alert ".concat(alertMsg.status == 1 ? 'alert-success' : 'alert-danger')
-  }, alertMsg.text), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "alert ".concat(alertMsg.status == 1 ? "alert-success" : "alert-danger")
+  }, alertMsg.text), newInstrumentModal && typeId > -1 && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_NewInstrumentModal_NewInstrumentModal__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    closeModal: function closeModal() {
+      return setNewInstrumentModal(false);
+    },
+    typeId: typeId,
+    setTypeId: setTypeId
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "content__body instruments__view"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_InstrumentsList_InstrumentsList__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Types_Types__WEBPACK_IMPORTED_MODULE_1__["default"], {
     newType: newType,
     typesList: typesList,
-    removeType: removeType
+    removeType: removeType,
+    setNewInstrumentModal: setNewInstrumentModal,
+    setTypeId: setTypeId
   })));
 };
 
@@ -58874,6 +58907,94 @@ var InstrumentsList = function InstrumentsList(_ref) {
 
 /***/ }),
 
+/***/ "./resources/js/components/Instruments/NewInstrumentModal/NewInstrumentModal.js":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/Instruments/NewInstrumentModal/NewInstrumentModal.js ***!
+  \**************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _globals_Modal_Modal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../globals/Modal/Modal */ "./resources/js/components/globals/Modal/Modal.js");
+/* harmony import */ var _Helpers_InputHook__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Helpers/InputHook */ "./resources/js/components/Helpers/InputHook.js");
+/* harmony import */ var _AppContext__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../AppContext */ "./resources/js/AppContext.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+var NewInstrumentModal = function NewInstrumentModal(_ref) {
+  var closeModal = _ref.closeModal,
+      typeId = _ref.typeId;
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(""),
+      _useState2 = _slicedToArray(_useState, 2),
+      id = _useState2[0],
+      setId = _useState2[1];
+
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(""),
+      _useState4 = _slicedToArray(_useState3, 2),
+      note = _useState4[0],
+      setNote = _useState4[1];
+
+  var context = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_AppContext__WEBPACK_IMPORTED_MODULE_3__["default"]);
+
+  var createInstrument = function createInstrument() {
+    context.postRequest("/v1/instrument/new", {
+      id: id,
+      typeId: typeId,
+      note: note
+    }).then(function (resp) {
+      context.setMsg({
+        text: resp.data.value,
+        status: 1,
+        clear: true
+      });
+    })["catch"](function (err) {
+      return context.setMsg({
+        text: err,
+        status: 2,
+        clear: true
+      });
+    });
+  };
+
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_globals_Modal_Modal__WEBPACK_IMPORTED_MODULE_1__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "btn btn-danger",
+    onClick: closeModal
+  }, "X"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "modal-content__container"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Helpers_InputHook__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    label: "id",
+    id: "id",
+    type: "text",
+    onChange: setId
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Helpers_InputHook__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    label: "Notatka",
+    id: "note",
+    type: "text",
+    onChange: setNote
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    className: "btn btn-success",
+    onClick: createInstrument
+  }, "Dodaj")));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (NewInstrumentModal);
+
+/***/ }),
+
 /***/ "./resources/js/components/Instruments/Types/NewType/NewType.js":
 /*!**********************************************************************!*\
   !*** ./resources/js/components/Instruments/Types/NewType/NewType.js ***!
@@ -58903,7 +59024,9 @@ var NewType = function NewType(_ref) {
       newType = _useState2[0],
       setNewType = _useState2[1];
 
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "type-form-add__container"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "form-group"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
     htmlFor: "new-type"
@@ -58947,14 +59070,18 @@ __webpack_require__.r(__webpack_exports__);
 var Types = function Types(_ref) {
   var newType = _ref.newType,
       typesList = _ref.typesList,
-      removeType = _ref.removeType;
+      removeType = _ref.removeType,
+      setNewInstrumentModal = _ref.setNewInstrumentModal,
+      setTypeId = _ref.setTypeId;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "type-list__container"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_NewType_NewType__WEBPACK_IMPORTED_MODULE_1__["default"], {
     createNewType: newType
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TypesList_TypesList__WEBPACK_IMPORTED_MODULE_2__["default"], {
     typesList: typesList,
-    removeType: removeType
+    removeType: removeType,
+    setNewInstrumentModal: setNewInstrumentModal,
+    setTypeId: setTypeId
   }));
 };
 
@@ -58977,7 +59104,8 @@ __webpack_require__.r(__webpack_exports__);
 
 var TypeItem = function TypeItem(_ref) {
   var elem = _ref.elem,
-      removeType = _ref.removeType;
+      removeType = _ref.removeType,
+      setNewInstrumentModal = _ref.setNewInstrumentModal;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "type-item__container"
   }, elem.name, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -58985,7 +59113,8 @@ var TypeItem = function TypeItem(_ref) {
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     className: "btn btn-primary"
   }, "Edytuj"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    className: "btn btn-success"
+    className: "btn btn-success",
+    onClick: setNewInstrumentModal
   }, "Nowy Instrument"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     className: "btn btn-danger",
     onClick: removeType
@@ -59013,13 +59142,20 @@ __webpack_require__.r(__webpack_exports__);
 
 var TypesList = function TypesList(_ref) {
   var typesList = _ref.typesList,
-      _removeType = _ref.removeType;
+      _removeType = _ref.removeType,
+      _setNewInstrumentModal = _ref.setNewInstrumentModal,
+      setTypeId = _ref.setTypeId;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, typesList.map(function (elem) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TypeItem_TypeItem__WEBPACK_IMPORTED_MODULE_1__["default"], {
       key: elem.id,
       elem: elem,
       removeType: function removeType() {
         return _removeType(elem.id);
+      },
+      setNewInstrumentModal: function setNewInstrumentModal() {
+        setTypeId(elem.id);
+
+        _setNewInstrumentModal(true);
       }
     });
   }));
@@ -59536,7 +59672,6 @@ var AddNewUser = function AddNewUser(_ref) {
   };
 
   var alertMsg = context.alertMsg;
-  console.log(alertMsg);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "widget__container"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Helpers_InputHook__WEBPACK_IMPORTED_MODULE_1__["default"], {
@@ -59775,8 +59910,8 @@ var Modal = function Modal(_ref) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\bandbase\bdb\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\bandbase\bdb\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\dev\dbd\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\dev\dbd\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
