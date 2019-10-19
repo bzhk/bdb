@@ -8,6 +8,7 @@ import Sidebar from "./Sidebar/Sidebar";
 import Body from "./Body/Body";
 import Users from "./Users/Users";
 import User from "./User/User";
+import InstrumentsList from "./InstrumentsList/InstrumentsList";
 
 import Instruments from "./Instruments/Instruments";
 
@@ -41,8 +42,14 @@ class App extends Component {
                 sidebar: false
             },
             {
-                path: "/instruments",
-                name: "Instrumenty",
+                path: "/instruments_list",
+                name: "Lista Instrumentów",
+                Component: InstrumentsList,
+                sidebar: true
+            },
+            {
+                path: "/add_indstrument",
+                name: "Dodawanie",
                 Component: Instruments,
                 sidebar: true
             }
@@ -210,6 +217,9 @@ class App extends Component {
         });
     };
 
+    componentDidMount = () => {
+        this.getUsers();
+    };
     render() {
         const {
             userData,

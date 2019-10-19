@@ -1,6 +1,5 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Types from "./Types/Types";
-import InstrumentsList from "./InstrumentsList/InstrumentsList";
 import AppContext from "../../AppContext";
 import NewInstrumentModal from "./NewInstrumentModal/NewInstrumentModal";
 
@@ -17,10 +16,9 @@ const Instruments = ({}) => {
         createInstrumentModal
     } = context;
 
-    if (!typesList.length) {
+    useEffect(() => {
         getTypes();
-        return null;
-    }
+    }, []);
     return (
         <div className="content__container ">
             <div className="content__header">Instrumenty</div>
@@ -41,7 +39,6 @@ const Instruments = ({}) => {
                 />
             )}
             <div className="content__body instruments__view">
-                <InstrumentsList />
                 <Types
                     newType={newType}
                     typesList={typesList}

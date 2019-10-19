@@ -1,13 +1,12 @@
-.sidebar__container{
-    padding-top:200px;
+.sidebar__container {
+    padding-top: 200px;
     height: 100%;
     width: 20%;
     max-width: 300px;
     background: rgb(194, 194, 194);
-
 }
 
-.sidebar__item{
+.sidebar__item {
     width: 100%;
     padding: 20px 10px;
     color: #fff;
@@ -16,9 +15,10 @@
     border-bottom: 1px solid rgb(223, 223, 223);
     text-align: center;
 }
-.sidebar__item:hover{
+.sidebar__item:hover {
+    cursor: pointer;
     background: rgb(223, 223, 223);
 }
-.sidebar__item--active{
+.sidebar__item--active {
     background: rgb(223, 223, 223);
 }

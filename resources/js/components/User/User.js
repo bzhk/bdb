@@ -21,7 +21,6 @@ const User = ({ match }) => {
         return <div>Loading...</div>;
     }
 
-
     return (
         <div className="widget__container">
             {modal && (
@@ -34,7 +33,7 @@ const User = ({ match }) => {
                     }}
                 />
             )}
-            <UserHeader userData={userData} goBack={goBack}/>
+            <UserHeader userData={userData} goBack={goBack} />
             <UserBody
                 openModal={async () => {
                     await getFreeInstruments();
