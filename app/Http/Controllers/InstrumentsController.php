@@ -80,5 +80,37 @@ class InstrumentsController extends Controller
         $list = InstrumentModel::with(['name','user'])->get();
         return response(['status'=>'OK','value' => $list], 200);
     }
+
+    public function removeInstrument(Request $req)
+    {
+        try{
+            $id = $req->id;
+            $list = InstrumentModel::where('id',$id)->delete();
+            return response(['status'=>'OK','value' => $list], 200);
+        }catch(Error $e)
+        {      
+            $msg = $this->parseErrorResponse($e->getMessage());
+            return response(['status'=>'error', 'value'=>$msg], 500);
+        }  
+    }
+
+    public function saveInstrument(Request $req, $id)
+    {
+        try{
+            $note = $req->note;
+            $catalog_id = $req->catalog_id;
+            $user_id = $req->user_id;
+            $instrument = InstrumentModel::where('id',$id)->first();
+            $instrument->user_id = $user_id;
+            $instrument->catalog_id = $catalog_id;
+            $instrument->note = $note;
+            $instrument->save();
+            return response('OK', 200);
+        }catch(Error $e)
+        {      
+            $msg = $this->parseErrorResponse($e->getMessage());
+            return response(['status'=>'error', 'value'=>$msg], 500);
+        }  
+    }
     
 }

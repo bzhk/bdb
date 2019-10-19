@@ -29,9 +29,11 @@ Route::prefix('v1')->group(function () {
 
     Route::get('instrument/all','InstrumentsController@getAllInstrumentsList');
     Route::post('instrument/new','InstrumentsController@createnewInstrument');
+    Route::post('instrument/del','InstrumentsController@removeInstrument');
     Route::get('instruments','InstrumentsController@getInstrumentsList');
     Route::post('instruments/add','InstrumentsController@setNewInstrumentsOwner');
     Route::post('instrument/freeup','InstrumentsController@freeupInstrument');
+    Route::post('instrument/save/{id}','InstrumentsController@saveInstrument');
 });
 
 
