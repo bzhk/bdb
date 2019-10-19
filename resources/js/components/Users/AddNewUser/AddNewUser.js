@@ -8,6 +8,14 @@ const AddNewUser = ({}) => {
     const context = useContext(AppContext);
 
     const addNewUser = (name, surname) => {
+        if (!name || !surname) {
+            context.setMsg({
+                text: "Brak imienia lub naziwska",
+                status: 2,
+                clear: true
+            });
+            return;
+        }
         context
             .postRequest("/v1/user/new", { name, surname })
             .then(resp => {
@@ -27,12 +35,19 @@ const AddNewUser = ({}) => {
 
     return (
         <div className="widget__container">
-            <InputHook label="Imię" id="name" type="text" onChange={setName} />
+            <InputHook
+                label="Imię"
+                id="name"
+                type="text"
+                onChange={setName}
+                value={name}
+            />
             <InputHook
                 label="Nazwisko"
                 id="surname"
                 type="text"
                 onChange={setSurname}
+                value={surname}
             />
             <button
                 className="btn btn-success"

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 const InputHook = props => {
-    const [text, setText] = useState(props.value || "");
     return (
         <div className="form-group">
             <label htmlFor={props.id}>{props.label}</label>
@@ -12,10 +11,9 @@ const InputHook = props => {
                 id={props.id}
                 placeholder={props.placeholder}
                 onChange={ev => {
-                    setText(props.text);
                     props.onChange(ev.target.value);
                 }}
-                value={text}
+                value={props.value}
             />
         </div>
     );
