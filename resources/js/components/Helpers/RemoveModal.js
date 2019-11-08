@@ -6,7 +6,7 @@ const RemoveModal = ({ actionOK, actionCancel, label }) => {
     return (
         <Modal>
             <div>{label}</div>
-            <div>
+            <div className="modal-btns">
                 <button className="btn btn-success" onClick={actionOK}>
                     OK
                 </button>

@@ -24,7 +24,7 @@ Route::prefix('v1')->group(function () {
 
     Route::get('types','TypesController@get');
     Route::post('type/new','TypesController@newType');
-    Route::post('type/edit','TypesController@editType');
+    Route::post('type/edit/{id}','TypesController@editType');
     Route::post('type/remove','TypesController@removeType');
 
     Route::get('instrument/all','InstrumentsController@getAllInstrumentsList');

@@ -3,6 +3,7 @@ import UserHeader from "./UserHeader/UserHeader";
 import UserBody from "./UserBody/UserBody";
 import AppContext from "../../AppContext";
 import FreeInstrumentsList from "./FreeInstrumentsList/FreeInstrumentsList";
+import AlertPanel from "../Helpers/AlertPanel/AlertPanel";
 const User = ({ match }) => {
     const context = useContext(AppContext);
     const {
@@ -23,6 +24,7 @@ const User = ({ match }) => {
 
     return (
         <div className="widget__container">
+            <AlertPanel />
             {modal && (
                 <FreeInstrumentsList
                     closeModal={() => setModal(false)}

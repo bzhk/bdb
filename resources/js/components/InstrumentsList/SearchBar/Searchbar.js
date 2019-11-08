@@ -14,7 +14,7 @@ const SearchBar = ({ label, filter, type, setFilter }) => {
             placeholder={label}
             onChange={onChange}
             value={inputValue}
-            className="form-control"
+            className="form-control searchbar__input"
         />
     );
 };

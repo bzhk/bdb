@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 use App\TypesModel;
+use App\InstrumentModel;
+
 class TypesController extends Controller
 {
     public function get(Request $req)
@@ -47,7 +49,8 @@ class TypesController extends Controller
     {
         try{
             $id = $req->id;
-    
+            $instances = InstrumentModel::where('instruments_name_id',$id)->delete();
+            
             $type = TypesModel::where('id',$id)->first();
             $type->delete();
 

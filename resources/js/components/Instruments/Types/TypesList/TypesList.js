@@ -5,6 +5,7 @@ const TypesList = ({
     typesList,
     removeType,
     setNewInstrumentModal,
+    setInstrumentTypeModal,
     setTypeId
 }) => {
     const [removeModal, setRemoveModal] = useState(false);
@@ -24,22 +25,28 @@ const TypesList = ({
                     }}
                 />
             )}
-            {typesList.map(elem => {
-                return (
-                    <TypeItem
-                        key={elem.id}
-                        elem={elem}
-                        removeType={() => {
-                            setRemoveId(elem.id);
-                            setRemoveModal(true);
-                        }}
-                        setNewInstrumentModal={() => {
-                            setTypeId(elem.id);
-                            setNewInstrumentModal(true);
-                        }}
-                    />
-                );
-            })}
+            {typesList.length
+                ? typesList.map(elem => {
+                      return (
+                          <TypeItem
+                              key={elem.id}
+                              elem={elem}
+                              removeType={() => {
+                                  setRemoveId(elem.id);
+                                  setRemoveModal(true);
+                              }}
+                              setNewInstrumentModal={() => {
+                                  setTypeId(elem.id);
+                                  setNewInstrumentModal(true);
+                              }}
+                              setInstrumentTypeModal={() => {
+                                  setTypeId(elem.id);
+                                  setInstrumentTypeModal(true);
+                              }}
+                          />
+                      );
+                  })
+                : null}
         </div>
     );
 };

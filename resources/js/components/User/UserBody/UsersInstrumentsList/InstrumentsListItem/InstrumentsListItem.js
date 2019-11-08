@@ -1,16 +1,16 @@
 import React from "react";
 const InstrumentsListItem = ({ elem, freeUpInstrument }) => {
     return (
-        <div className="instruments-item__container">
-            <div>
-                {elem.id} - {elem.catalog_id} -{" "}
-                {elem.name.name}
-            </div>
-
-            <div>
-                <button className="btn btn-danger" onClick={freeUpInstrument}>Usuń</button>
-            </div>
-        </div>
+        <tr>
+            <td>{elem.id}</td>
+            <td>{elem.catalog_id}</td>
+            <td>{elem.name.name}</td>
+            <td>
+                <button className="btn btn-danger" onClick={freeUpInstrument}>
+                    Usuń
+                </button>
+            </td>
+        </tr>
     );
 };
 export default InstrumentsListItem;

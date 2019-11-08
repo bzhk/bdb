@@ -5,21 +5,42 @@
 }
 
 .instrument-content__container {
-    padding: 10px;
-    background-color: #fff7d0;
+    background-color: #fff;
+    border-bottom: 1px solid rgb(240, 240, 240);
 }
 
 .instruments-table__container {
     margin-top: 20px;
     width: 100%;
+    .btn-info {
+        color: #fff !important;
+        margin-right: 5px;
+    }
     thead {
         th {
             margin: 0 10px;
+            font-size: 10px !important;
+
+            input {
+                font-size: 10px !important;
+            }
         }
     }
     tbody {
-        tr {
-            padding: 5px 0;
+        td {
+            padding: 10px;
         }
+        tr:hover {
+            background: rgb(240, 240, 240);
+        }
+        td {
+            cursor: pointer;
+        }
+    }
+    .instrument-content__id {
+        width: 60px;
+    }
+    .instrument-content__actions {
+        width: 160px;
     }
 }

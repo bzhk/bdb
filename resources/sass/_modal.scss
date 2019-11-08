@@ -22,8 +22,20 @@
     padding: 20px;
     background: #fff;
     z-index: 101;
+    position: relative;
+    border-radius: 0.25rem;
+    .btn-close {
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
 }
-
+.modal-btns {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    margin-top: 30px;
+}
 .modal-content__container {
     display: flex;
     flex-direction: column;

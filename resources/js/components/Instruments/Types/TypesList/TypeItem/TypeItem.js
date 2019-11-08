@@ -1,11 +1,21 @@
 import React from "react";
 
-const TypeItem = ({ elem, removeType, setNewInstrumentModal }) => {
+const TypeItem = ({
+    elem,
+    removeType,
+    setNewInstrumentModal,
+    setInstrumentTypeModal
+}) => {
     return (
         <div className="type-item__container">
             {elem.name}
             <div className="type-item__btns">
-                <button className="btn btn-primary">Edytuj</button>
+                <button
+                    className="btn btn-primary"
+                    onClick={setInstrumentTypeModal}
+                >
+                    Edytuj
+                </button>
                 <button
                     className="btn btn-success"
                     onClick={setNewInstrumentModal}

@@ -7,7 +7,8 @@ const UserHeader = ({ userData, goBack }) => {
             <button className="btn btn-primary" onClick={goBack}>
                 Wstecz
             </button>
-            {id}: {name} {surname}
+            <hr />
+            Lista instrumentów dla {name} {surname}
         </div>
     );
 };

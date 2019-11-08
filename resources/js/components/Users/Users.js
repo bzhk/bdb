@@ -11,6 +11,8 @@ class Users extends Component {
     }
 
     componentDidMount = () => {
+        this.context.setMsg({ text: null, status: 404 });
+
         this.context.getUsers();
     };
 
@@ -18,16 +20,25 @@ class Users extends Component {
         const { nextPath, getUserData, usersList, removeUser } = this.context;
         return (
             <div className="content__container">
-                <div className="content__header">Users</div>
                 <div className="content__body">
                     <AlertPanel />
-                    <AddNewUser />
-                    <UsersList
-                        usersList={usersList}
-                        nextPath={nextPath}
-                        getUserData={getUserData}
-                        removeUser={removeUser}
-                    />
+                    <div className="row">
+                        <div className="col-3">
+                            <div className="content__header">
+                                Dodaj nową osobę
+                            </div>
+                            <AddNewUser />
+                        </div>
+                        <div className="col-9">
+                            <div className="content__header">Lista</div>
+                            <UsersList
+                                usersList={usersList}
+                                nextPath={nextPath}
+                                getUserData={getUserData}
+                                removeUser={removeUser}
+                            />
+                        </div>
+                    </div>
                 </div>
             </div>
         );

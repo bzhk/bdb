@@ -78,6 +78,12 @@ class App extends Component {
         });
     };
 
+    runSubscribe = async () => {
+        this.state.subscribe.forEach(async action => {
+            console.log(action);
+            await action();
+        });
+    };
     getUsers = () => {
         this.getRequest("/v1/users")
             .then(res => {
@@ -99,7 +105,8 @@ class App extends Component {
         this.getRequest(`/v1/user/${id}`)
             .then(res => {
                 this.setState({
-                    userData: res.data.value
+                    userData: res.data.value,
+                    subscribe: [() => this.getUserData(id)]
                 });
             })
             .catch(err => {
@@ -110,7 +117,7 @@ class App extends Component {
     addInstrument = (userId, catalogId) => {
         this.postRequest("/v1/instruments/add", { userId, catalogId })
             .then(res => {
-                console.log(res);
+                this.runSubscribe();
             })
             .catch(err => console.log(err));
     };
@@ -125,38 +132,46 @@ class App extends Component {
 
     freeUpInstrument = catalogId => {
         this.postRequest("/v1/instrument/freeup", { catalogId })
-            .then(res => console.log(res))
+            .then(res => this.runSubscribe())
             .catch(err => console.log(err));
     };
 
     getTypes = () => {
         this.getRequest("/v1/types")
             .then(res => {
-                console.log(res);
                 this.setState({ typesList: res.data });
             })
             .catch(err => console.log(err));
     };
 
     newType = name => {
+        if (!name) return;
         this.postRequest("/v1/type/new", { name })
             .then(res => {
-                this.setMsg({ text: res.data.value, type: 1, clear: true });
+                this.setMsg({
+                    text: "Utworzono nowy typ.",
+                    status: 1,
+                    clear: true
+                });
                 this.getTypes();
             })
             .catch(err => {
-                this.setMsg({ text: err, type: 2, clear: true });
+                this.setMsg({ text: err, status: 2, clear: true });
             });
     };
 
     removeType = id => {
         this.postRequest("/v1/type/remove", { id })
             .then(res => {
-                this.setMsg({ text: res.data.value, type: 1, clear: true });
+                this.setMsg({
+                    text: "Typ został poprawnie usunięty.",
+                    status: 1,
+                    clear: true
+                });
                 this.getTypes();
             })
             .catch(err => {
-                this.setMsg({ text: err, type: 2, clear: true });
+                this.setMsg({ text: err, status: 2, clear: true });
             });
     };
 

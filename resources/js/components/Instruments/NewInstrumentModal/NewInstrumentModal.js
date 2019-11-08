@@ -12,8 +12,9 @@ const NewInstrumentModal = ({ closeModal, typeId }) => {
         context
             .postRequest("/v1/instrument/new", { id, typeId, note })
             .then(resp => {
+                closeModal();
                 context.setMsg({
-                    text: resp.data.value,
+                    text: "Utworzono nowy instrument",
                     status: 1,
                     clear: true
                 });
@@ -25,11 +26,16 @@ const NewInstrumentModal = ({ closeModal, typeId }) => {
 
     return (
         <Modal>
-            <button className="btn btn-danger" onClick={closeModal}>
+            <button className="btn btn-danger btn-close" onClick={closeModal}>
                 X
             </button>
             <div className="modal-content__container">
-                <InputHook label="id" id="id" type="text" onChange={setId} />
+                <InputHook
+                    label="numer katalogowy"
+                    id="id"
+                    type="text"
+                    onChange={setId}
+                />
                 <InputHook
                     label="Notatka"
                     id="note"

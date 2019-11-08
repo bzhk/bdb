@@ -16,9 +16,9 @@ const EditInstrument = ({ closeModal, instrumentForEdit, getInstruments }) => {
     const saveInstrument = async () => {
         try {
             await postRequest(`/v1/instrument/save/${id}`, {
-                note,
-                catalog_id,
-                user_id
+                note: noteContent,
+                catalog_id: catalogId,
+                user_id: user
             });
             getInstruments();
             closeModal();
@@ -33,7 +33,7 @@ const EditInstrument = ({ closeModal, instrumentForEdit, getInstruments }) => {
 
     return (
         <Modal>
-            <button className="btn btn-danger" onClick={closeModal}>
+            <button className="btn btn-danger btn-close" onClick={closeModal}>
                 X
             </button>
             <div className="modal-content__container">

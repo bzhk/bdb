@@ -4,6 +4,7 @@ import Instrument from "./Instrument/Instrument";
 import SearchBar from "./SearchBar/Searchbar";
 import EditInstrument from "./EditInstrument/EditInstrument";
 import RemoveModal from "../Helpers/RemoveModal";
+import AlertPanel from "../Helpers/AlertPanel/AlertPanel";
 class InstrumentsList extends PureComponent {
     constructor(props) {
         super(props);
@@ -27,9 +28,20 @@ class InstrumentsList extends PureComponent {
             this.context
                 .getRequest("/v1/instrument/all")
                 .then(async resp => {
-                    const list = resp.data.value.map(elem => {
+                    const { value } = resp.data;
+
+                    if (!value.length) {
+                        this.context.setMsg({
+                            text: "Brak danych",
+                            status: 2,
+                            clear: true
+                        });
+
+                        return reject();
+                    }
+                    const list = value.map(elem => {
                         const newElem = Object.assign({}, elem);
-                        newElem.name = elem.name.name;
+                        newElem.name = elem.name && elem.name.name;
                         newElem.user = elem.user
                             ? `${elem.user.name} ${elem.user.surname}`
                             : "";
@@ -95,13 +107,17 @@ class InstrumentsList extends PureComponent {
     };
     removeInstrument = id => {
         return new Promise(async resolve => {
-            await this.context.postRequest("/v1/instrument/del", { id });
-            await this.getInstruments();
+            try {
+                await this.context.postRequest("/v1/instrument/del", { id });
+                await this.getInstruments();
+            } catch (err) {}
+
             resolve();
         });
     };
 
     componentDidMount() {
+        this.context.setMsg({ text: null, status: 404 });
         this.getInstruments();
     }
 
@@ -139,11 +155,14 @@ class InstrumentsList extends PureComponent {
                     />
                 )}
                 <div className="content__container ">
-                    <div className="content__header">Lista instrumentów</div>
+                    <AlertPanel />
+                    <div className="content__header">
+                        Lista instrumentów - {instrumentsList.length} suma
+                    </div>
                     <table className="instruments-table__container">
                         <thead>
                             <tr>
-                                <th>
+                                <th className="instrument-content__id">
                                     <SearchBar
                                         label={"ID"}
                                         filter={this.filter}
@@ -175,9 +194,15 @@ class InstrumentsList extends PureComponent {
                                         setFilter={this.setFilter}
                                     />
                                 </th>
-                                <th>Informacje dodatkowe</th>
-                                <th />
-                                <th />
+                                <th>
+                                    <SearchBar
+                                        label={"Informacje dodatkowe"}
+                                        filter={this.filter}
+                                        type={"add_info"}
+                                        setFilter={this.setFilter}
+                                    />
+                                </th>
+                                <th className="instrument-content__actions" />
                             </tr>
                         </thead>
                         <tbody>

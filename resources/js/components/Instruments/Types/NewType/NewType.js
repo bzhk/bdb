@@ -6,7 +6,7 @@ const NewType = ({ createNewType }) => {
     return (
         <div className="type-form-add__container">
             <div className="form-group">
-                <label htmlFor="new-type">Dodaj nowy typ</label>
+                <label htmlFor="new-type">Nazwa typu</label>
                 <input
                     type="text"
                     className="form-control"
@@ -21,7 +21,7 @@ const NewType = ({ createNewType }) => {
                 className="btn btn-success"
                 onClick={() => createNewType(newType)}
             >
-                Utwórz
+                Dodaj
             </button>
         </div>
     );

@@ -42,6 +42,7 @@ const AddNewUser = ({}) => {
                 onChange={setName}
                 value={name}
             />
+
             <InputHook
                 label="Nazwisko"
                 id="surname"
@@ -49,6 +50,7 @@ const AddNewUser = ({}) => {
                 onChange={setSurname}
                 value={surname}
             />
+
             <button
                 className="btn btn-success"
                 onClick={() => {
@@ -57,15 +59,6 @@ const AddNewUser = ({}) => {
             >
                 Dodaj
             </button>
-            {alertMsg.text && (
-                <div
-                    className={`alert ${
-                        alertMsg.status == 1 ? "alert-success" : "alert-danger"
-                    }`}
-                >
-                    {alertMsg.text}
-                </div>
-            )}
         </div>
     );
 };

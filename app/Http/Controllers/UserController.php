@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\UserModel;
+use App\InstrumentsHistoryModel;
 
 class UserController extends Controller
 {
@@ -36,6 +37,7 @@ class UserController extends Controller
         $id = $req->id;
         
         try{
+            InstrumentsHistoryModel::where('user_id',$id)->delete();
             UserModel::where('id',$id)
                         ->delete();
 
